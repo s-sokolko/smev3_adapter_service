@@ -1,0 +1,1242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 rel. 3 U (http://www.altova.com) by Company (GNIVC FNS RF) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn://x-artefacts-fns/vipul-types/4.0.6" targetNamespace="urn://x-artefacts-fns/vipul-types/4.0.6" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!--==========================================  Структурированные типы  ==========================================-->
+	<xs:complexType name="АдрИнЕГРЮЛТип">
+		<xs:annotation>
+			<xs:documentation>Сведения об адресе за пределами территории РФ, внесенные в ЕГРЮЛ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ГРНДата" type="tns:ГРНДатаТип">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ГРНДатаИспр" type="tns:ГРНДатаТип" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+					<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ОКСМ" type="tns:OKCMType" use="required">
+			<xs:annotation>
+				<xs:documentation>Код страны</xs:documentation>
+				<xs:documentation>Принимает значение в соответствии с Общероссийским классификатором стран мира (ОКСМ)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="НаимСтран" type="tns:string-255" use="required">
+			<xs:annotation>
+				<xs:documentation>Наименование страны</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="АдрИн" type="tns:string-510" use="optional">
+			<xs:annotation>
+				<xs:documentation>Адрес</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="АдрРФЕГРЮЛТип">
+		<xs:annotation>
+			<xs:documentation>Сведения об адресе в РФ, внесенные в ЕГРЮЛ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Регион" type="tns:РегионТип">
+				<xs:annotation>
+					<xs:documentation>Субъект Российской Федерации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Район" type="tns:РайонТип" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Район (улус и т.п.)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Город" type="tns:ГородТип" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Город (волость и т.п.)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="НаселПункт" type="tns:НаселПунктТип" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Населенный пункт (село и т.п.)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Улица" type="tns:УлицаТип" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Улица (проспект, 
+переулок и т.п.)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ГРНДата" type="tns:ГРНДатаТип">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ГРНДатаИспр" type="tns:ГРНДатаТип" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+					<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Индекс" type="tns:digits-6" use="optional">
+			<xs:annotation>
+				<xs:documentation>Индекс</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="КодРегион" type="tns:SSRFType" use="required">
+			<xs:annotation>
+				<xs:documentation>Код субъекта Российской Федерации</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="КодАдрКладр" use="optional">
+			<xs:annotation>
+				<xs:documentation>Код адреса по КЛАДР</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="tns:string-23">
+					<xs:pattern value="[0-9]{11}"/>
+					<xs:pattern value="[0-9]{15}"/>
+					<xs:pattern value="[0-9]{19}"/>
+					<xs:pattern value="[0-9]{23}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Дом" type="tns:string-50" use="optional">
+			<xs:annotation>
+				<xs:documentation>Дом (владение и т.п.)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Корпус" type="tns:string-50" use="optional">
+			<xs:annotation>
+				<xs:documentation>Корпус (строение и т.п.)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Кварт" type="tns:string-50" use="optional">
+			<xs:annotation>
+				<xs:documentation>Квартира (офис и т.п.)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ВидЗапТип">
+		<xs:annotation>
+			<xs:documentation>Сведения о причине внесения записи в реестр (ЕГРЮЛ или ЕГРИП)</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="КодСПВЗ" type="tns:string-5" use="required">
+			<xs:annotation>
+				<xs:documentation>Код вида записи (причины внесения записи в ЕГРЮЛ или ЕГРИП) по справочнику СПВЗ</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="НаимВидЗап" type="tns:string-500" use="required">
+			<xs:annotation>
+				<xs:documentation>Наименование вида записи (причины внесения записи в ЕГРЮЛ или ЕГРИП) </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ГородТип">
+		<xs:annotation>
+			<xs:documentation>Сведения об адресообразующем элементе город</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="ТипГород" type="tns:string-36" use="required">
+			<xs:annotation>
+				<xs:documentation>Тип элемента город (город, волость и т.п.)</xs:documentation>
+				<xs:documentation>Принимает значение полного наименования типа адресного объекта в соответствии с Классификатором адресов России  (КЛАДР)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="НаимГород" type="tns:string-50" use="required">
+			<xs:annotation>
+				<xs:documentation>Наименование (элемент город) </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ГРНДатаТип">
+		<xs:annotation>
+			<xs:documentation>ГРН и дата внесения записи в ЕГРЮЛ</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="ГРН" type="tns:OGRNCompanyType" use="optional">
+			<xs:annotation>
+				<xs:documentation>Государственный регистрационный номер записи ЕГРЮЛ</xs:documentation>
+				<xs:documentation>Может отсутствовать, если запись в ЕГРЮЛ вносилась без присвоения государственного регистрационного номера</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ДатаЗаписи" use="required">
+			<xs:annotation>
+				<xs:documentation>Дата внесения записи в ЕГРЮЛ</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:date"/>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ДоляУстКапЕГРЮЛТип">
+		<xs:annotation>
+			<xs:documentation>Доля в уставном капитале (складочном капитале, уставном фонде, паевом фонде), внесенная в ЕГРЮЛ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="РазмерДоли" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Размер доли (в процентах или в виде дроби - десятичной или простой) </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="Процент" type="tns:number-18_15">
+							<xs:annotation>
+								<xs:documentation>Размер доли в процентах</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="ДробДесят" type="tns:number-18_15">
+							<xs:annotation>
+								<xs:documentation>Размер доли в десятичных дробях</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="ДробПрост" type="tns:ДробьТип">
+							<xs:annotation>
+								<xs:documentation>Размер доли в простых дробях</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ГРНДата" type="tns:ГРНДатаТип">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ГРНДатаИспр" type="tns:ГРНДатаТип" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+					<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="НоминСтоим" type="tns:number-19_4" use="required">
+			<xs:annotation>
+				<xs:documentation>Номинальная стоимость доли в рублях</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ДробьТип">
+		<xs:annotation>
+			<xs:documentation>Представление простой дроби</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Числит" use="required">
+			<xs:annotation>
+				<xs:documentation>Числитель простой дроби</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="tns:number-18">
+					<xs:minInclusive value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Знаменат" use="required">
+			<xs:annotation>
+				<xs:documentation>Знаменатель простой дроби</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="tns:number-18">
+					<xs:minInclusive value="2"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ИдГРНДатаТип">
+		<xs:annotation>
+			<xs:documentation>Идентификатор записи, ГРН (при наличии) и дата внесения записи в ЕГРЮЛ</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="ИдЗап" type="tns:number-19" use="required">
+			<xs:annotation>
+				<xs:documentation>Системный идентификатор записи</xs:documentation>
+				<xs:documentation>При наличии государственного регистрационного номера записи может совпадать с этим номером</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ГРН" type="tns:OGRNCompanyType" use="optional">
+			<xs:annotation>
+				<xs:documentation>Государственный регистрационный номер записи</xs:documentation>
+				<xs:documentation>Может отсутствовать, если запись в ЕГРЮЛ внесена без присвоения государственного регистрационного номера</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ДатаЗап" use="required">
+			<xs:annotation>
+				<xs:documentation>Дата внесения записи в ЕГРЮЛ</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:date"/>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="НаселПунктТип">
+		<xs:annotation>
+			<xs:documentation>Сведения об адресообразующем элементе населенный пункт</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="ТипНаселПункт" type="tns:string-36" use="optional">
+			<xs:annotation>
+				<xs:documentation>Тип элемента населенный пункт (поселок, село и т.п.)</xs:documentation>
+				<xs:documentation>Принимает значение полного наименования типа адресного объекта в соответствии с Классификатором адресов России (КЛАДР)</xs:documentation>
+				<xs:documentation/>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="НаимНаселПункт" type="tns:string-255" use="required">
+			<xs:annotation>
+				<xs:documentation>Наименование (элемент населенный пункт)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="РайонТип">
+		<xs:annotation>
+			<xs:documentation>Сведения об адресообразующем элементе район</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="ТипРайон" type="tns:string-36" use="required">
+			<xs:annotation>
+				<xs:documentation>Тип элемента район (район, улус и т.п.)</xs:documentation>
+				<xs:documentation>Принимает значение полного наименования типа адресного объекта в соответствии с Классификатором адресов России  (КЛАДР)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="НаимРайон" type="tns:string-50" use="required">
+			<xs:annotation>
+				<xs:documentation>Наименование (элемент район)  </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="РегионТип">
+		<xs:annotation>
+			<xs:documentation>Сведения об адресообразующем элементе регион</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="ТипРегион" type="tns:string-36" use="required">
+			<xs:annotation>
+				<xs:documentation>Тип элемента регион (республика, край и т.п.)</xs:documentation>
+				<xs:documentation>Принимает значение полного наименования типа адресного объекта в соответствии с Классификатором адресов России (КЛАДР)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="НаимРегион" type="tns:string-50" use="required">
+			<xs:annotation>
+				<xs:documentation>Наименование (элемент регион)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="РешСудТип">
+		<xs:annotation>
+			<xs:documentation>Сведения о решении суда</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="НаимСуда" type="tns:string-1000" use="required">
+			<xs:annotation>
+				<xs:documentation>Наименование суда, которым принято решение</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Номер" type="tns:string-255" use="required">
+			<xs:annotation>
+				<xs:documentation>Номер решения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Дата" use="required">
+			<xs:annotation>
+				<xs:documentation>Дата решения</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:date"/>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="СвНаимПодраздТип">
+		<xs:annotation>
+			<xs:documentation>Сведения о наименовании обособленного подразделения (филиала/представительства)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ГРНДата" type="tns:ГРНДатаТип">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ГРНДатаИспр" type="tns:ГРНДатаТип" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+					<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="НаимПолн" type="tns:string-1000" use="required">
+			<xs:annotation>
+				<xs:documentation>Наименование</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="СвНедДанУчрТип">
+		<xs:annotation>
+			<xs:documentation>Сведения о недостоверности данных об учредителе (участнике)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="РешСудНедДанУчр" type="tns:РешСудТип" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о решении суда, на основании которого указанные сведения признаны недостоверными</xs:documentation>
+					<xs:documentation>Формируется в случае, если значение реквизита ПризнНедДанУчр = 3</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ГРНДата" type="tns:ГРНДатаТип">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ГРНДатаИспр" type="tns:ГРНДатаТип" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+					<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ПризнНедДанУчр" use="required">
+			<xs:annotation>
+				<xs:documentation>Признак недостоверности данных</xs:documentation>
+				<xs:documentation>, где:
+																				1 - признак недостоверности, внесенный в ЕГРЮЛ на основании заявления по форме Р34001 самого физического лица (если сведения о недостоверности сведений об учредителе (участнике) внесены на основании записи с кодом СПВЗ 17022);
+2 - признак недостоверности, внесенный в ЕГРЮЛ по результатам проверки достоверности содержащихся в ЕГРЮЛ сведений о юридическом лице (если сведения о недостоверности сведений об учредителе (участнике)  внесены на основании записи с кодом СПВЗ 17023);
+3 - признак недостоверности, внесенный в ЕГРЮЛ на основании решения суда (если сведения о недостоверности сведений об учредителе (участнике)  внесены на основании записи с кодом СПВЗ 16006)</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:length value="1"/>
+					<xs:enumeration value="1"/>
+					<xs:enumeration value="2"/>
+					<xs:enumeration value="3"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="ТекстНедДанУчр" use="required">
+			<xs:annotation>
+				<xs:documentation>Текст о недостоверности сведений, выводимый в выписке в строке с наименованием «Дополнительные сведения»</xs:documentation>
+				<xs:documentation>				
+Принимает значение: 
+•	«сведения недостоверны (заявление физического лица о недостоверности сведений о нем)» - если сведения о недостоверности внесены по заявлению самого ФЛ (Р34001) (ПризнНедДанУчр =1), 
+•	«сведения недостоверны (результаты проверки достоверности содержащихся в ЕГРЮЛ сведений о юридическом лице)» - если сведения о недостоверности внесены по данным, выявленным НО (ПризнНедДанУчр=2), 
+•	«сведения недостоверны (решение суда)» - если сведения о недостоверности внесены на основании решения суда (ПризнНедДанУчр=3),
+Выводится в выписке в строке с наименованием «Дополнительные сведения»
+</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="500"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="СвНомТелТип">
+		<xs:annotation>
+			<xs:documentation>Сведения о контактном телефоне</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ГРНДата" type="tns:ГРНДатаТип">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ГРНДатаИспр" type="tns:ГРНДатаТип" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+					<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="НомТел" type="tns:string-50" use="required">
+			<xs:annotation>
+				<xs:documentation>Контактный телефон</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="СвНОТип">
+		<xs:annotation>
+			<xs:documentation>Сведения о налоговом органе, в котором юридическое лицо или обособленное подразделение состоит (состояло) на учете</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="КодНО" type="tns:SONOType" use="required">
+			<xs:annotation>
+				<xs:documentation>Код органа по справочнику СОУН</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="НаимНО" type="tns:string-255" use="required">
+			<xs:annotation>
+				<xs:documentation>Наименование налогового органа</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="СвНотУдДогЗалТип">
+		<xs:annotation>
+			<xs:documentation>Сведения о нотариальном удостоверении договора залога</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="СвНотариус" type="tns:СвФЛЕГРЮЛТип">
+				<xs:annotation>
+					<xs:documentation>ФИО и (при наличии) ИНН нотариуса, удостоверившего договор залога</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Номер" type="tns:string-255" use="required">
+			<xs:annotation>
+				<xs:documentation>Номер договора залога</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Дата" use="required">
+			<xs:annotation>
+				<xs:documentation>Дата договора залога</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:date"/>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="СвОбремОткрТип">
+		<xs:annotation>
+			<xs:documentation>Сведения об обременении доли участника, внесенные в ЕГРЮЛ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="РешСуд" type="tns:РешСудТип" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о решении судебного органа, по которому на долю учредителя (участника) наложено обременение</xs:documentation>
+					<xs:documentation>Формируется в случае, если обременение на долю учредителя (участника) наложено судебным решением</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ГРНДата" type="tns:ГРНДатаТип">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ГРНДатаИспр" type="tns:ГРНДатаТип" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+					<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="СвЗалогДержФЛ" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о залогодержателе - ФЛ</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ГРНДатаПерв" type="tns:ГРНДатаТип" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном лице</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="СвФЛ" type="tns:СвФЛЕГРЮЛТип">
+							<xs:annotation>
+								<xs:documentation>Сведения о ФИО и (при наличии) ИНН ФЛ</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="СвНотУдДогЗал" type="tns:СвНотУдДогЗалТип" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Сведения о нотариальном удостоверении договора залога</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="СвЗалогДержЮЛ" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о залогодержателе - ЮЛ</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ГРНДатаПерв" type="tns:ГРНДатаТип" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном лице</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="НаимИННЮЛ" type="tns:СвЮЛЕГРЮЛТип">
+							<xs:annotation>
+								<xs:documentation>Сведения о наименовании и (при наличии) ОГРН и ИНН ЮЛ</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="СвРегИн" type="tns:СвРегИнЮЛЕГРЮЛТип" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Сведения о регистрации в стране происхождения</xs:documentation>
+								<xs:documentation>Формируется при наличии указанных сведений в ЕГРЮЛ в отношении управляющей организации - иностранного ЮЛ</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="СвНотУдДогЗал" type="tns:СвНотУдДогЗалТип" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Сведения о нотариальном удостоверении договора залога</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ВидОбрем" use="required">
+			<xs:annotation>
+				<xs:documentation>Вид обременения</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="tns:string-20">
+					<xs:enumeration value="ЗАЛОГ"/>
+					<xs:enumeration value="ИНОЕ ОБРЕМЕНЕНИЕ"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="СрокОбременения" type="tns:string-5000" use="optional">
+			<xs:annotation>
+				<xs:documentation>Срок обременения или порядок определения срока</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="СвОКВЭДТип">
+		<xs:annotation>
+			<xs:documentation>Сведения о виде деятельности, внесенном в ЕГРЮЛ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ГРНДата" type="tns:ГРНДатаТип">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ГРНДатаИспр" type="tns:ГРНДатаТип" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+					<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="КодОКВЭД" type="tns:OKVEDType" use="required">
+			<xs:annotation>
+				<xs:documentation>Код по Общероссийскому классификатору видов экономической деятельности</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="НаимОКВЭД" type="tns:string-1000" use="required">
+			<xs:annotation>
+				<xs:documentation>Наименование вида деятельности по Общероссийскому классификатору видов экономической деятельности</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ПрВерсОКВЭД" use="optional">
+			<xs:annotation>
+				<xs:documentation>Признак версии Общероссийского классификатора видов экономической деятельности</xs:documentation>
+				<xs:documentation> , где: 				
+				2001 – если код соответствует версии ОКВЭД ОК 029-2001 (КДЕС Ред. 1);
+2014 – если код соответствует версии ОКВЭД ОК 029-2014 (КДЕС Ред. 2).
+Отсутствие данного атрибута в файле означает, что при внесении кода ОКВЭД использовался классификатор ОК 029-2001 (КДЕС Ред. 1)</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="tns:string-10">
+					<xs:enumeration value="2001"/>
+					<xs:enumeration value="2014"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="СвРегИнЮЛЕГРЮЛТип">
+		<xs:annotation>
+			<xs:documentation>Сведения о регистрации иностранного ЮЛ в стране происхождения, внесенные в ЕГРЮЛ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ГРНДата" type="tns:ГРНДатаТип">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ГРНДатаИспр" type="tns:ГРНДатаТип" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+					<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ОКСМ" type="tns:OKCMType" use="required">
+			<xs:annotation>
+				<xs:documentation>Код страны происхождения</xs:documentation>
+				<xs:documentation>Принимает значение в соответствии с Общероссийским классификатором стран мира (ОКСМ)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="НаимСтран" type="tns:string-255" use="required">
+			<xs:annotation>
+				<xs:documentation>Наименование страны происхождения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ДатаРег" type="xs:date" use="optional">
+			<xs:annotation>
+				<xs:documentation>Дата регистрации</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="РегНомер" type="tns:string-255" use="optional">
+			<xs:annotation>
+				<xs:documentation>Регистрационный номер</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="НаимРегОрг" type="tns:string-1000" use="optional">
+			<xs:annotation>
+				<xs:documentation>Наименование регистрирующего органа</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="АдрСтр" type="tns:string-510" use="optional">
+			<xs:annotation>
+				<xs:documentation>Адрес (место нахождения) в стране происхождения</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="СвРегОргТип">
+		<xs:annotation>
+			<xs:documentation>Сведения о регистрирующем органе</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="КодНО" type="tns:SONOType" use="required">
+			<xs:annotation>
+				<xs:documentation>Код органа по справочнику СОУН</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="НаимНО" type="tns:string-255" use="required">
+			<xs:annotation>
+				<xs:documentation>Наименование регистрирующего (налогового) органа</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="СвУчетНОПодраздТип">
+		<xs:annotation>
+			<xs:documentation>Сведения об учете в налоговом органе по месту нахождения обособленного подразделения (филиала/представительства)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="СвНО" type="tns:СвНОТип">
+				<xs:annotation>
+					<xs:documentation>Сведения о налоговом органе по месту нахождения филиала/представительства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ГРНДата" type="tns:ГРНДатаТип">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ГРНДатаИспр" type="tns:ГРНДатаТип" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+					<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="КПП" type="tns:KPPType" use="required">
+			<xs:annotation>
+				<xs:documentation>КПП филиала/представительства</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ДатаПостУч" use="required">
+			<xs:annotation>
+				<xs:documentation>Дата постановки на учет в налоговом органе</xs:documentation>
+				<xs:documentation>Дата постановки на учет в налоговом органе по месту нахождения филиала (представительства)</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:date"/>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="СвФЛЕГРЮЛТип">
+		<xs:annotation>
+			<xs:documentation>Сведения о ФИО и (при наличии) ИНН ФЛ, внесенные в ЕГРЮЛ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ГРНДата" type="tns:ГРНДатаТип">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ГРНДатаИспр" type="tns:ГРНДатаТип" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+					<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Фамилия" type="tns:string-60" use="optional">
+			<xs:annotation>
+				<xs:documentation>Фамилия</xs:documentation>
+				<xs:documentation>Является обязательным при отсутствии имени ФЛ</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Имя" type="tns:string-60" use="optional">
+			<xs:annotation>
+				<xs:documentation>Имя</xs:documentation>
+				<xs:documentation>Является обязательным при отсутствии фамилии ФЛ</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Отчество" type="tns:string-60" use="optional">
+			<xs:annotation>
+				<xs:documentation>Отчество</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ИННФЛ" type="tns:PhysicalPersonINNType" use="optional">
+			<xs:annotation>
+				<xs:documentation>ИНН ФЛ</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="СвЮЛЕГРЮЛТип">
+		<xs:annotation>
+			<xs:documentation>Сведения о наименовании и (при наличии) ИНН и ОГРН ЮЛ - учредителя (участника), управляющей организации, залогодержателя, управляющего долей участника, внесенные в ЕГРЮЛ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ГРНДата" type="tns:ГРНДатаТип">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ГРНДатаИспр" type="tns:ГРНДатаТип" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+					<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ОГРН" type="tns:OGRNCompanyType" use="optional">
+			<xs:annotation>
+				<xs:documentation>Основной государственный регистрационный номер юридического лица</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ИНН" type="tns:LegalPersonINNType" use="optional">
+			<xs:annotation>
+				<xs:documentation>ИНН юридического лица</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="НаимЮЛПолн" type="tns:string-1000" use="required">
+			<xs:annotation>
+				<xs:documentation>Полное наименование юридического лица</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="УлицаТип">
+		<xs:annotation>
+			<xs:documentation>Сведения об адресообразующем элементе улица</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="ТипУлица" type="tns:string-36" use="optional">
+			<xs:annotation>
+				<xs:documentation>Тип адресного объекта улица (улица, проспект, 
+переулок и т.п.)</xs:documentation>
+				<xs:documentation>Принимает значение полного наименования типа адресного объекта в соответствии с Классификатором адресов России  (КЛАДР)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="НаимУлица" type="tns:string-255" use="required">
+			<xs:annotation>
+				<xs:documentation>Наименование (элемент улица) </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="AttachmentRefType">
+		<xs:annotation>
+			<xs:documentation>Ссылка из содержательной части запроса (заявки, ответа) на вложение, находящееся в том же СМЭВ-сообщении.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="attachmentId" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Идентификатор вложения, на которое ссылаемся. Должен быть равен значению
+					//{urn://x-artefacts-smev-gov-ru/smev-core/client-interaction/basic/1.0:AttachedFile}[n]/Id/text()
+					того вложения, на которое нужно сослаться.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="_AttachmentsBlockType">
+		<xs:annotation>
+			<xs:documentation>Сведения о вложении</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AttachmentDescription" type="tns:_AttachmentDescriptionType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="_AttachmentDescriptionType">
+		<xs:sequence>
+			<!--Указание способа передачи вложения: через ФХ или черзе-->
+			<xs:choice>
+				<!--Ссылка на папку ФХ, в котором содержится передаваемое вложение-->
+				<xs:element name="AttachmentFSLink" type="xs:string"/>
+				<!--Признак передачи вложения методом MTOM-->
+				<xs:element name="IsMTOMAttachmentContent" type="xs:boolean"/>
+			</xs:choice>
+			<!--Описание возможных форматов вложения-->
+			<xs:choice>
+				<!--Сведения по результатам налоговой проверки-->
+				<xs:element name="AttachmentFormat1" type="tns:_StructuredAttachmentFormatType1"/>
+				<!--Сведения об уплате и Сведения из расчета-->
+				<xs:element name="AttachmentFormat2" type="tns:_StructuredAttachmentFormatType2"/>
+				<!--Квитанция об обработки поступивших сведений-->
+				<xs:element name="AttachmentFormat3" type="tns:_StructuredAttachmentFormatType3"/>
+			</xs:choice>
+			<!--Блок передачи файла отсоединенной электронной подписи вложения-->
+			<xs:element name="AttachmentSignatureFSLink" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="_StructuredAttachmentFormatType1">
+		<xs:sequence>
+			<!--Обязательное и явное указание: является ли формат структурированным или не является-->
+			<xs:element name="IsUnstructuredFormat" type="xs:boolean"/>
+			<!--Обязательное и явное указание: будет ли содержимое вложения упаковываться Zip-алгоритмом-->
+			<xs:element name="IsZippedPacket" type="xs:boolean"/>
+			<!--Если формат структурированный, то описываем его структуру-->
+			<xs:element name="DptCodeSender" type="tns:string-4" nillable="false"/>
+			<xs:element name="Year" type="xs:gYear" nillable="false"/>
+			<xs:element name="AccountCode" type="tns:string-2" nillable="false"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="_StructuredAttachmentFormatType2">
+		<xs:sequence>
+			<!--Явно указываем является ли формат структурированным или нет-->
+			<xs:element name="IsUnstructuredFormat" type="xs:boolean"/>
+			<!--Обязательное и явное указание: будет ли содержимое вложения упаковываться Zip-алгоритмом-->
+			<xs:element name="IsZippedPacket" type="xs:boolean"/>
+			<!--Если формат структурированный, то описываем его структуру-->
+			<xs:element name="RaschopsDocument" type="tns:RaschopsDocumentType" nillable="false"/>
+			<xs:element name="SveduplDocument" type="tns:SveduplDocumentType" nillable="false"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="_StructuredAttachmentFormatType3">
+		<xs:sequence>
+			<!--Явно указываем является ли формат структурированным или нет-->
+			<xs:element name="IsUnstructuredFormat" type="xs:boolean"/>
+			<!--Обязательное и явное указание: будет ли содержимое вложения упаковываться Zip-алгоритмом-->
+			<xs:element name="IsZippedPacket" type="xs:boolean"/>
+			<!--Если формат структурированный, то описываем его структуру-->
+			<xs:element name="DocumentType" type="xs:string" nillable="false"/>
+			<xs:element name="DptProcessID" type="xs:string" nillable="false"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SveduplDocumentType">
+		<xs:sequence>
+			<xs:element name="DptCodeSender" type="tns:string-4" nillable="false"/>
+			<xs:element name="Year" type="xs:gYear" nillable="false"/>
+			<xs:element name="AccountCode" type="tns:string-2" nillable="false"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RaschopsDocumentType">
+		<xs:sequence>
+			<xs:element name="DptCodeSender" type="tns:string-4" nillable="false"/>
+			<xs:element name="Year" type="xs:gYear" nillable="false"/>
+			<xs:element name="AccountCode" type="tns:string-2" nillable="false"/>
+			<xs:element name="CorrectionNumber" type="tns:number-3" nillable="false"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="digits-6">
+		<xs:annotation>
+			<xs:documentation>Строка, состоящая из 6 цифр</xs:documentation>
+			<xs:documentation>Содержит только цифры</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="6"/>
+			<xs:pattern value="\d{6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="digits-4">
+		<xs:annotation>
+			<xs:documentation>Строка, состоящая из четырёх цифр</xs:documentation>
+			<xs:documentation>Содержит только цифры</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="4"/>
+			<xs:pattern value="\d{4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="digits-2">
+		<xs:annotation>
+			<xs:documentation>Строка, состоящая из 2 цифр</xs:documentation>
+			<xs:documentation>Содержит только цифры</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="2"/>
+			<xs:pattern value="\d{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KPPType">
+		<xs:annotation>
+			<xs:documentation>Код причины постановки на учет (КПП) </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="9"/>
+			<xs:pattern value="([0-9]{1}[1-9]{1}|[1-9]{1}[0-9]{1})([0-9]{2})([0-9A-F]{2})([0-9]{3})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LegalPersonINNType">
+		<xs:annotation>
+			<xs:documentation>Идентификационный номер налогоплательщика - организации</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="10"/>
+			<xs:pattern value="([0-9]{1}[1-9]{1}|[1-9]{1}[0-9]{1})[0-9]{8}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="number-19_4">
+		<xs:annotation>
+			<xs:documentation>Число десятичноеое, содержащее до 19 разрядов, четыре после запятой</xs:documentation>
+			<xs:documentation>Содержит только цифры</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="19"/>
+			<xs:fractionDigits value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="number-18_15">
+		<xs:annotation>
+			<xs:documentation>Число десятичноеое, содержащее до 18 разрядов, пятнадцать после запятой</xs:documentation>
+			<xs:documentation>Содержит только цифры</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="18"/>
+			<xs:fractionDigits value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="number-19">
+		<xs:annotation>
+			<xs:documentation>Число целое, содержащее до 19 разрядов</xs:documentation>
+			<xs:documentation>Содержит только цифры</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:totalDigits value="19"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="number-18">
+		<xs:annotation>
+			<xs:documentation>Число целое, содержащее до 18 разрядов</xs:documentation>
+			<xs:documentation>Содержит только цифры</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:totalDigits value="18"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="number-3">
+		<xs:annotation>
+			<xs:documentation>Число целое, содержащее до 3 разрядов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:totalDigits value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OGRNSoleProprietorType">
+		<xs:annotation>
+			<xs:documentation>ОГРН индивидуального предпринимателя</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="15"/>
+			<xs:pattern value="[0-9]{15}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OGRNCompanyType">
+		<xs:annotation>
+			<xs:documentation>ОГРН юридического лица</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="13"/>
+			<xs:pattern value="[0-9]{13}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OKCMType">
+		<xs:annotation>
+			<xs:documentation>Код Общероссийского классификатора стран мира (3-разрядный, цифровой)</xs:documentation>
+			<xs:documentation>Содержит только цифры</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+			<xs:pattern value="\d{3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OKVEDType">
+		<xs:annotation>
+			<xs:documentation>Код Общероссийского классификатора видов экономической деятельности</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="8"/>
+			<xs:minLength value="2"/>
+			<xs:pattern value="[0-9]{2}"/>
+			<xs:pattern value="[0-9]{2}\.[0-9]{1}"/>
+			<xs:pattern value="[0-9]{2}\.[0-9]{2}"/>
+			<xs:pattern value="[0-9]{2}\.[0-9]{2}\.[0-9]{1}"/>
+			<xs:pattern value="[0-9]{2}\.[0-9]{2}\.[0-9]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PhysicalPersonINNType">
+		<xs:annotation>
+			<xs:documentation>Идентификационный номер налогоплательщика - физического лица</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="12"/>
+			<xs:pattern value="([0-9]{1}[1-9]{1}|[1-9]{1}[0-9]{1})[0-9]{10}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SONOType">
+		<xs:annotation>
+			<xs:documentation>Код Классификатора системы обозначений налоговых органов</xs:documentation>
+			<xs:documentation>Содержит только цифры</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="4"/>
+			<xs:pattern value="\d{4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SPDULType">
+		<xs:annotation>
+			<xs:documentation>Код Справочника видов документов, удостоверяющих личность налогоплательщика</xs:documentation>
+			<xs:documentation>Содержит только цифры</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="2"/>
+			<xs:pattern value="\d{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SSRFType">
+		<xs:annotation>
+			<xs:documentation>Код по Справочнику субъектов Российской Федерации</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="tns:digits-2"/>
+	</xs:simpleType>
+	<xs:simpleType name="STOPFType">
+		<xs:annotation>
+			<xs:documentation>Код Справочника территориальных органов пенсионного фонда России</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="6"/>
+			<xs:minLength value="3"/>
+			<xs:pattern value="[0-9]{3}"/>
+			<xs:pattern value="[0-9]{6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-5000">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной от 1 до 5000 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-1000">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной от 1 до 1000 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="1000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-500">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной от 1 до 500 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="500"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-510">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной от 1 до 510 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="510"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-255">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной от 1 до 255 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-100">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной от 1 до 100 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="100"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-60">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной от 1 до 60 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-50">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной от 1 до 50 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-36">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной от 1 до 36 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="36"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-23">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной от 1 до 23 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="23"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-20">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной от 1 до 20 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-10">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной от 1 до 10 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-7">
+		<xs:annotation>
+			<xs:documentation>Текст длиной ровно 7 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="7"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-5">
+		<xs:annotation>
+			<xs:documentation>Текст длиной ровно 5 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-4">
+		<xs:annotation>
+			<xs:documentation>Текст длиной ровно 4 символа</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-3">
+		<xs:annotation>
+			<xs:documentation>Текст длиной ровно 3 символа</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-2">
+		<xs:annotation>
+			<xs:documentation>Текст длиной ровно 2 символа</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string-1">
+		<xs:annotation>
+			<xs:documentation>Текст длиной ровно 1 символ</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

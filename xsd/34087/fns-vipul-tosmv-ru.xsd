@@ -1,0 +1,2139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 rel. 3 U (http://www.altova.com) by Company (GNIVC FNS RF) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="urn://x-artefacts-fns-vipul-tosmv-ru/311-14/4.0.6" xmlns:fnst="urn://x-artefacts-fns/vipul-types/4.0.6" targetNamespace="urn://x-artefacts-fns-vipul-tosmv-ru/311-14/4.0.6" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="urn://x-artefacts-fns/vipul-types/4.0.6" schemaLocation="./commons/fns-vipul-types.xsd"/>
+	<xs:element name="FNSVipULRequest">
+		<xs:annotation>
+			<xs:documentation>Запрос на предоставление из ЕГРЮЛ выписки о юридическом лице</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ЗапросЮЛ">
+					<xs:annotation>
+						<xs:documentation>Идентификационные сведения о юридическом лице, в отношении которого составлен запрос</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="ОГРН" type="fnst:OGRNCompanyType">
+								<xs:annotation>
+									<xs:documentation>Основной государственный регистрационный номер юридического лица</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ИННЮЛ" type="fnst:LegalPersonINNType">
+								<xs:annotation>
+									<xs:documentation>ИНН юридического лица</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="ИдДок" type="fnst:string-36" use="required">
+				<xs:annotation>
+					<xs:documentation>Идентификатор запроса</xs:documentation>
+					<xs:documentation>GUID</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="НомерДела" type="fnst:string-50" use="optional">
+				<xs:annotation>
+					<xs:documentation>Номер дела, находящегося в производстве в суде или правоохранительном органе, участником которого является юридическое лицо, в отношении которого запрашивается выписка</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FNSVipULResponse">
+		<xs:annotation>
+			<xs:documentation>Выписка из ЕГРЮЛ в отношении юридического лица</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="СвЮЛ">
+					<xs:annotation>
+						<xs:documentation>Сведения о  юридическом лице</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="СвНаимЮЛ">
+								<xs:annotation>
+									<xs:documentation>Сведения о наименовании юридического лица</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+												<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="НаимЮЛПолн" type="fnst:string-1000" use="required">
+										<xs:annotation>
+											<xs:documentation>Полное наименование юридического лица на русском языке</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="НаимЮЛСокр" type="fnst:string-510" use="optional">
+										<xs:annotation>
+											<xs:documentation>Сокращенное наименование юридического лица на русском языке</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвАдресЮЛ">
+								<xs:annotation>
+									<xs:documentation>Сведения об адресе (месте нахождения)</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="АдресРФ" type="fnst:АдрРФЕГРЮЛТип">
+											<xs:annotation>
+												<xs:documentation>Адрес (место нахождения) юридического лица</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="СвНедАдресЮЛ" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Сведения о недостоверности адреса</xs:documentation>
+												<xs:documentation>Формируется только если в ЕГРЮЛ внесены сведения о недостоверности адреса, а сам адрес ЮЛ еще не изменен</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="РешСудНедАдр" type="fnst:РешСудТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Сведения о решении суда, на основании которого адрес признан недостоверным</xs:documentation>
+															<xs:documentation>Формируется в случае, если значение реквизита ПризнНедАдресЮЛ = 3</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+															<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="ПризнНедАдресЮЛ" use="required">
+													<xs:annotation>
+														<xs:documentation>Признак недостоверности адреса </xs:documentation>
+														<xs:documentation>, где:
+																	2 - признак недостоверности, внесенный в ЕГРЮЛ по результатам проверки достоверности содержащихся в ЕГРЮЛ сведений о юридическом лице (если сведения о недостоверности сведений об адресе внесены на основании записи с кодом СПВЗ 17023;
+3 - признак недостоверности, внесенный в ЕГРЮЛ на основании решения суда (если сведения о недостоверности сведений об адресе внесены на основании записи с кодом СПВЗ 16006)</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="fnst:string-1">
+															<xs:enumeration value="2"/>
+															<xs:enumeration value="3"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="ТекстНедАдресЮЛ" use="optional">
+													<xs:annotation>
+														<xs:documentation>Текст о недостоверности сведений, выводимый в выписке в строке с наименованием «Дополнительные сведения»</xs:documentation>
+														<xs:documentation>Принимает значение: 
+•	«сведения недостоверны (результаты проверки достоверности содержащихся в ЕГРЮЛ сведений о юридическом лице)» -   если сведения о недостоверности внесены по данным, выявленным НО (ПризнНедАдресЮЛ=2):
+•	«сведения недостоверны (решение суда)» -  если сведения о недостоверности внесены на основании решения суда (ПризнНедАдресЮЛ=3).
+Выводится в выписке в строке с наименованием «Дополнительные сведения»</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="fnst:string-500"/>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="СвРешИзмМН" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Сведения о принятии юридическим лицом решения об изменении места нахождения</xs:documentation>
+												<xs:documentation>Формируется только если в ЕГРЮЛ внесены сведения о принятии такого решения, а сам адрес ЮЛ еще не изменен</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Регион" type="fnst:РегионТип">
+														<xs:annotation>
+															<xs:documentation>Субъект Российской Федерации</xs:documentation>
+															<xs:documentation>Выгружаются сведения о субъекте РФ по новому месту нахождения ЮЛ из принятого решения об изменении места нахождения</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Район" type="fnst:РайонТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Район (улус и т.п.)</xs:documentation>
+															<xs:documentation>Выгружаются сведения о районе по новому месту нахождения ЮЛ из принятого решения об изменении места нахождения (при наличии в заявлении о принятом решении об изменении места нахождения ЮЛ)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Город" type="fnst:ГородТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Город (волость и т.п.)</xs:documentation>
+															<xs:documentation>Выгружаются сведения о городе по новому месту нахождения ЮЛ из принятого решения об изменении места нахождения (при наличии в заявлении о принятом решении об изменении места нахождения ЮЛ)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="НаселПункт" type="fnst:НаселПунктТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Населенный пункт (село и т.п.)</xs:documentation>
+															<xs:documentation>Выгружаются сведения о населенном пункте по новому месту нахождения ЮЛ из принятого решения об изменении места нахождения (при наличии в заявлении о принятом решении об изменении места нахождения ЮЛ))</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+															<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="ТекстРешИзмМН" use="required">
+													<xs:annotation>
+														<xs:documentation>Текст, выводимый в выписке в строке с наименованием «Дополнительные сведения»</xs:documentation>
+														<xs:documentation>Принимает значение:
+																	Юридическим лицом принято решение об изменении места нахождения.
+														Выводится в выписке в строке с наименованием «Дополнительные сведения»</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="fnst:string-500"/>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвАдрЭлПочты" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Сведения об адресе электронной почты юридического лица</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической  ошибки в указанных сведениях</xs:documentation>
+												<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="E-mail" type="fnst:string-50" use="required">
+										<xs:annotation>
+											<xs:documentation>Адрес электронной почты</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвОбрЮЛ">
+								<xs:annotation>
+									<xs:documentation>Сведения о регистрации (образовании) юридического лица</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="СпОбрЮЛ">
+											<xs:annotation>
+												<xs:documentation>Способ образования юридического лица</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="КодСпОбрЮЛ" type="fnst:string-2" use="required">
+													<xs:annotation>
+														<xs:documentation>Код способа образования по справочнику СЮЛНД</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="НаимСпОбрЮЛ" type="fnst:string-255" use="optional">
+													<xs:annotation>
+														<xs:documentation>Наименование способа образования юридического лица</xs:documentation>
+														<xs:documentation>Отсутствует в случае, если в реквизите КодСпОбрЮЛ  передается код =«03» (Сведения о регистрации на территории Республики Крым или территории города федерального значения Севастополя на день принятия в Российскую Федерацию Республики Крым и образования в составе Российской Федерации новых субъектов - Республики Крым и города федерального значения Севастополя)</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+												<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="ОГРН" type="fnst:OGRNCompanyType" use="required">
+										<xs:annotation>
+											<xs:documentation>Основной государственный регистрационный номер юридического лица</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="ДатаОГРН" use="required">
+										<xs:annotation>
+											<xs:documentation>Дата присвоения ОГРН</xs:documentation>
+											<xs:documentation>Для ЮЛ, созданных после 01.07.2002 г., является датой регистрации ЮЛ</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:date"/>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="РегНом" type="fnst:string-255" use="optional">
+										<xs:annotation>
+											<xs:documentation>Регистрационный номер, присвоенный российскому юридическому лицу до 1 июля 2002 года, или регистрационный номер юридического лица на территории Республики Крым или территории города федерального значения Севастополя на день принятия в РФ и образования в составе РФ новых субъектов - Республики Крым и города федерального значения Севастополя</xs:documentation>
+											<xs:documentation>Формируется только в отношении российских ЮЛ, созданных до 1 июля 2002 года, а также в отношении ЮЛ зарегистрированных на территории Республики Крым или территории города федерального значения Севастополя на день принятия в РФ и образования в составе РФ новых субъектов - Республики Крым и города федерального значения Севастополя (значение реквизита «КодСпОбрЮЛ» в элементе «СпОбрЮЛ» =«03»)
+											Не формируется в отношении российских организаций, созданных с 1 июля 2002 года (значение реквизита «КодСпОбрЮЛ» в элементе «СпОбрЮЛ» больше «03»)</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="ДатаРег" use="optional">
+										<xs:annotation>
+											<xs:documentation>Дата регистрации юридического лица</xs:documentation>
+											<xs:documentation>
+											Формируется только в отношении российских ЮЛ, созданных до 1 июля 2002 года, а также в отношении ЮЛ зарегистрированных на территории Республики Крым или территории города федерального значения Севастополя на день принятия в РФ и образования в составе РФ новых субъектов - Республики Крым и города федерального значения Севастополя (значение реквизита «КодСпОбрЮЛ» в элементе «СпОбрЮЛ» =«03»)
+Не формируется в отношении российских организаций, созданных с 1 июля 2002 года (значение реквизита «КодСпОбрЮЛ» в элементе «СпОбрЮЛ» больше «03»)</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:date"/>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="НаимРО" type="fnst:string-255" use="optional">
+										<xs:annotation>
+											<xs:documentation>Наименование органа, зарегистрировавшего юридическое лицо</xs:documentation>
+											<xs:documentation>Формируется только в отношении российских ЮЛ, созданных до 1 июля 2002 года, а также в отношении ЮЛ зарегистрированных на территории Республики Крым или территории города федерального значения Севастополя на день принятия в РФ и образования в составе РФ новых субъектов - Республики Крым и города федерального значения Севастополя (значение реквизита «КодСпОбрЮЛ» в элементе «СпОбрЮЛ» =«03»)
+Не формируется в отношении российских организаций, созданных с 1 июля 2002 года (значение реквизита «КодСпОбрЮЛ» в элементе «СпОбрЮЛ» больше «03»)</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвРегОрг">
+								<xs:annotation>
+									<xs:documentation>Сведения о регистрирующем органе по месту нахождения юридического лица</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="КодНО" type="fnst:SONOType" use="required">
+										<xs:annotation>
+											<xs:documentation>Код органа по справочнику СОУН</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="НаимНО" type="fnst:string-255" use="required">
+										<xs:annotation>
+											<xs:documentation>Наименование регистрирующего (налогового) органа</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="АдрРО" type="fnst:string-255" use="optional">
+										<xs:annotation>
+											<xs:documentation>Адрес регистрирующего органа</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвСтатус" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Сведения о состоянии (статусе) юридического лица</xs:documentation>
+									<xs:documentation>Формируется только в случае, если:
+• Регистрация ЮЛ признана недействительной (код статуса по справочнику СЮЛСТ = «701», «702» или «801»)
+• ЮЛ находится в процессе ликвидации (код статуса по справочнику СЮЛСТ = «101»);
+• ЮЛ находится в процессе реорганизации (код статуса по справочнику СЮЛСТ больше «120» и меньше «200»);
+• в отношении ЮЛ в ЕГРЮЛ содержатся следующие сведения (не отмененные и не признанные недействительными):
+ - в ЕГРЮЛ внесена запись о принятом решении о предстоящем исключении недействующего ЮЛ из ЕГРЮЛ  (код статуса по справочнику СЮЛСТ = «105»)
+- ЮЛ находится в процессе уменьшения уставного капитала (код статуса по справочнику СЮЛСТ = «111»);
+-  ЮЛ принято решение об изменении места нахождения (код статуса по справочнику СЮЛСТ = «112»).
+В случае если в отношении ЮЛ внесено несколько статусов с указанными кодами (например, ЮЛ находится в состоянии нескольких реорганизаций), то формируются сведения по каждому из этих статусов</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="СвСтатус">
+											<xs:annotation>
+												<xs:documentation>Сведения о правоспособности (статусе) юридического лица</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="КодСтатусЮЛ" type="fnst:string-3" use="required">
+													<xs:annotation>
+														<xs:documentation>Код статуса юридического лица по справочнику СЮЛСТ</xs:documentation>
+														<xs:documentation> Может принимать следующие значения: 101, 105, 111, 112, больше «120» и меньше «200», 701, 702, 801</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="НаимСтатусЮЛ" type="fnst:string-500" use="required">
+													<xs:annotation>
+														<xs:documentation>Наименование статуса юридического лица по справочнику СЮЛСТ</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="СвРешИсклЮЛ" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Сведения о решении о предстоящем исключении недействующего ЮЛ из ЕГРЮЛ и его публикации </xs:documentation>
+												<xs:documentation>Формируется только в случае, если передается код статуса ЮЛ по справочнику СЮЛСТ=105</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="ДатаРеш" use="required">
+													<xs:annotation>
+														<xs:documentation>Дата решения</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:date"/>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="НомерРеш" type="fnst:string-255" use="required">
+													<xs:annotation>
+														<xs:documentation>Номер решения</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="ДатаПубликации" use="required">
+													<xs:annotation>
+														<xs:documentation>Дата публикации решения </xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:date">
+															<xs:minInclusive value="2005-07-06"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="НомерЖурнала" type="fnst:string-50">
+													<xs:annotation>
+														<xs:documentation>Номер журнала, в котором опубликовано решение</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+												<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвПрекрЮЛ" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Сведения о прекращении юридического лица</xs:documentation>
+									<xs:documentation>Формируется только в случае, если код статуса ЮЛ по справочнику СЮЛСТ больше 200 и меньше 700</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="СпПрекрЮЛ">
+											<xs:annotation>
+												<xs:documentation>Способ прекращения юридического лица</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="КодСпПрекрЮЛ" type="fnst:string-3" use="required">
+													<xs:annotation>
+														<xs:documentation>Код способа прекращения по справочнику СЮЛПД</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="НаимСпПрекрЮЛ" type="fnst:string-255" use="required">
+													<xs:annotation>
+														<xs:documentation>Наименование способа прекращения</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="СвРегОрг" type="fnst:СвРегОргТип">
+											<xs:annotation>
+												<xs:documentation>Сведения о регистрирующем (налоговом) органе, внесшем запись о прекращении юридического лица</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="ДатаПрекрЮЛ" use="required">
+										<xs:annotation>
+											<xs:documentation>Дата прекращения юридического лица</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:date"/>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвУчетНО" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Сведения об учете в налоговом органе</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:annotation>
+											<xs:documentation/>
+										</xs:annotation>
+										<xs:element name="СвНО" type="fnst:СвНОТип">
+											<xs:annotation>
+												<xs:documentation>Сведения о налоговом органе, в котором юридическое лицо состоит (для ЮЛ, прекративших деятельность - состояло) на учете</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+												<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="ИНН" type="fnst:LegalPersonINNType" use="required">
+										<xs:annotation>
+											<xs:documentation>ИНН юридического лица</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="КПП" type="fnst:KPPType" use="required">
+										<xs:annotation>
+											<xs:documentation>КПП юридического лица</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="ДатаПостУч" use="required">
+										<xs:annotation>
+											<xs:documentation>Дата постановки на учет в налоговом органе</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:date"/>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвРегПФ" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Сведения о регистрации юридического лица в качестве страхователя в территориальном органе Пенсионного фонда Российской Федерации</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="СвОргПФ">
+											<xs:annotation>
+												<xs:documentation>Сведения о территориальном органе Пенсионного фонда Российской Федерации</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="КодПФ" type="fnst:STOPFType" use="required">
+													<xs:annotation>
+														<xs:documentation>Код по справочнику СТОПФ</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="НаимПФ" type="fnst:string-255" use="required">
+													<xs:annotation>
+														<xs:documentation>Наименование</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+												<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="РегНомПФ" type="fnst:string-20" use="required">
+										<xs:annotation>
+											<xs:documentation>Регистрационный номер в территориальном органе Пенсионного фонда Российской Федерации</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="ДатаРег" use="required">
+										<xs:annotation>
+											<xs:documentation>Дата регистрации юридического лица в качестве страхователя</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:date"/>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвРегФСС" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Сведения о регистрации юридического лица в качестве страхователя в исполнительном органе Фонда социального страхования Российской Федерации</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="СвОргФСС">
+											<xs:annotation>
+												<xs:documentation>Сведения об  исполнительном органе Фонда социального страхования Российской Федерации</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="КодФСС" type="fnst:digits-4" use="required">
+													<xs:annotation>
+														<xs:documentation>Код по справочнику СТОФСС</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="НаимФСС" type="fnst:string-255" use="required">
+													<xs:annotation>
+														<xs:documentation>Наименование</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+												<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="РегНомФСС" type="fnst:string-20" use="required">
+										<xs:annotation>
+											<xs:documentation>Регистрационный номер в исполнительном органе Фонда социального страхования Российской Федерации</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="ДатаРег" use="required">
+										<xs:annotation>
+											<xs:documentation>Дата регистрации юридического лица в качестве страхователя</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:date"/>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвУстКап" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Сведения о размере указанного в учредительных документах коммерческой организации уставного капитала (складочного капитала, уставного фонда, паевого фонда)</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ДоляРубля" type="fnst:ДробьТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Доля рубля в капитале</xs:documentation>
+												<xs:documentation>Указывается в случае, если сумма уставного капитала включает в себя часть рубля в виде простой дроби</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+												<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="СведУмУК" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Сведения о нахождении хозяйственного общества в процессе уменьшения уставного капитала</xs:documentation>
+												<xs:documentation>Формируется только в случае, если хозяйственным обществом принято решение об уменьшении уставного капитала и оно не отменено и уставный капитал еще не уменьшен</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+															<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="ВелУмУК" use="required">
+													<xs:annotation>
+														<xs:documentation>Величина, на которую уменьшается уставный капитал (в рублях)</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:totalDigits value="19"/>
+															<xs:fractionDigits value="4"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="ДатаРеш" type="xs:date" use="required">
+													<xs:annotation>
+														<xs:documentation>Дата принятия решения об уменьшении уставного капитала</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="НаимВидКап" use="required">
+										<xs:annotation>
+											<xs:documentation>Наименование вида капитала</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="fnst:string-20">
+												<xs:enumeration value="УСТАВНЫЙ КАПИТАЛ"/>
+												<xs:enumeration value="СКЛАДОЧНЫЙ КАПИТАЛ"/>
+												<xs:enumeration value="УСТАВНЫЙ ФОНД"/>
+												<xs:enumeration value="ПАЕВЫЕ ВЗНОСЫ"/>
+												<xs:enumeration value="ПАЕВОЙ ФОНД"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="СумКап" use="required">
+										<xs:annotation>
+											<xs:documentation>Размер в рублях</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:decimal">
+												<xs:totalDigits value="19"/>
+												<xs:fractionDigits value="4"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвТипУстав" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Сведения об использовании юридическим лицом типового устава</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="СвНПАУтвТУ">
+											<xs:annotation>
+												<xs:documentation>Сведения о нормативном правовом акте об утверждении типового устава</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="НаимГОУтвТУ" use="required">
+													<xs:annotation>
+														<xs:documentation>Наименование государственного органа, утвердившего типовой устав</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="fnst:string-510"/>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="ВидНПА" use="required">
+													<xs:annotation>
+														<xs:documentation>Вид нормативного правового акта об утверждении типового устава</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="fnst:string-100"/>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="НаимНПА" use="optional">
+													<xs:annotation>
+														<xs:documentation>Наименование нормативного правового акта об утверждении типового устава</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="fnst:string-1000"/>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="НомерНПА" type="fnst:string-100" use="required">
+													<xs:annotation>
+														<xs:documentation>Номер нормативного правового акта об утверждении типового устава</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="ДатаНПА" use="required">
+													<xs:annotation>
+														<xs:documentation>Дата нормативного правового акта об утверждении типового устава</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:date"/>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="НомерПрил" type="fnst:string-100" use="optional">
+													<xs:annotation>
+														<xs:documentation>Номер приложения</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+												<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвУпрОрг" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Сведения об управляющей организации</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ГРНДатаПерв" type="fnst:ГРНДатаТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном лице</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="НаимИННЮЛ" type="fnst:СвЮЛЕГРЮЛТип">
+											<xs:annotation>
+												<xs:documentation>Сведения о наименовании и (при наличии) ОГРН и ИНН ЮЛ - управляющей организации</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="СвРегИн" type="fnst:СвРегИнЮЛЕГРЮЛТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Сведения о регистрации в стране происхождения</xs:documentation>
+												<xs:documentation>Формируется при наличии указанных сведений в ЕГРЮЛ в отношении управляющей организации - иностранном ЮЛ</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="СвНедДанУпрОрг" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Сведения о недостоверности данных об управляющей организации</xs:documentation>
+												<xs:documentation>Формируется только если в ЕГРЮЛ внесены сведения о недостоверности сведений о данной управляющей организации</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="РешСудНедДанУпрОрг" type="fnst:РешСудТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Сведения о решении суда, на основании которого указанные сведения признаны недостоверными</xs:documentation>
+															<xs:documentation>Формируется в случае, если значение реквизита ПризнНедДанУпрОрг=3</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+															<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="ПризнНедДанУпрОрг" use="required">
+													<xs:annotation>
+														<xs:documentation>Признак недостоверности данных</xs:documentation>
+														<xs:documentation>, где:
+2 - признак недостоверности, внесенный в ЕГРЮЛ по результатам проверки достоверности содержащихся в ЕГРЮЛ сведений о юридическом лице (если сведения о недостоверности сведений об управляющей организации внесены на основании записи с кодом СПВЗ 17023);
+3 - признак недостоверности, внесенный в ЕГРЮЛ на основании решения суда (если сведения о недостоверности сведений об управляющей организации внесены на основании записи с кодом СПВЗ 16006)</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="fnst:string-1">
+															<xs:enumeration value="2"/>
+															<xs:enumeration value="3"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="ТекстНедДанУпрОрг" use="required">
+													<xs:annotation>
+														<xs:documentation>Текст о недостоверности сведений, выводимый в выписке в строке с наименованием «Дополнительные сведения»</xs:documentation>
+														<xs:documentation>
+																	
+Принимает значение: 
+•	 «сведения недостоверны (результаты проверки достоверности содержащихся в ЕГРЮЛ сведений о юридическом лице)» - если сведения о недостоверности внесены по данным, выявленным НО (ПризнНедДанУпрОрг=2), 
+•	«сведения недостоверны (решение суда)» - если сведения о недостоверности внесены на основании решения суда (ПризнНедДанУпрОрг=3. 
+Выводится в выписке в строке с наименованием «Дополнительные сведения»</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="fnst:string-500"/>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="СвПредЮЛ" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Сведения о наименовании представительства или филиала в Российской Федерации, через которое иностранное ЮЛ осуществляет полномочия управляющей организации</xs:documentation>
+												<xs:documentation>Формируется только при наличии в ЕГРЮЛ сведений о наименовании представительства или филиала, через которое иностранное ЮЛ осуществляет полномочия управляющей организации</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+															<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="НаимПредЮЛ" type="fnst:string-1000" use="required">
+													<xs:annotation>
+														<xs:documentation>Полное наименование представительства или филиала в Российской Федерации, через которое иностранное ЮЛ осуществляет полномочия управляющей организации</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="СвАдрРФ" type="fnst:АдрРФЕГРЮЛТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Сведения об адресе управляющей организации в Российской Федерации</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="СвНомТел" type="fnst:СвНомТелТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Сведения о контактном телефоне</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ПредИнЮЛ" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Сведения о лице, через которое иностранное юридическое лицо осуществляет полномочия управляющей организации</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ГРНДатаПерв" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном лице</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвФЛ" type="fnst:СвФЛЕГРЮЛТип">
+														<xs:annotation>
+															<xs:documentation>Сведения о ФИО и (при наличии) ИНН ФЛ</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвНомТел" type="fnst:СвНомТелТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Сведения о контактном телефоне ФЛ</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СведДолжнФЛ" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Сведения о лице, имеющем право без доверенности действовать от имени юридического лица</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ГРНДатаПерв" type="fnst:ГРНДатаТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном лице</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="СвФЛ" type="fnst:СвФЛЕГРЮЛТип">
+											<xs:annotation>
+												<xs:documentation>Сведения о ФИО и (при наличии) ИНН ФЛ</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="СвДолжн">
+											<xs:annotation>
+												<xs:documentation>Сведения о должности ФЛ</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+															<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="ОГРНИП" type="fnst:OGRNSoleProprietorType" use="optional">
+													<xs:annotation>
+														<xs:documentation>Основной государственный регистрационный номер индивидуального предпринимателя - управляющего юридическим лицом</xs:documentation>
+														<xs:documentation>Формируется только для управляющего - индивидуального предпринимателя при наличии этих сведений в ЕГРЮЛ</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="ВидДолжн" type="fnst:string-2" use="required">
+													<xs:annotation>
+														<xs:documentation>Вид должностного лица по справочнику СКФЛЮЛ (указывается код по справочнику)</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="НаимВидДолжн" type="fnst:string-100" use="required">
+													<xs:annotation>
+														<xs:documentation>Наименование вида должностного лица по справочнику СКФЛЮЛ</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="НаимДолжн" type="fnst:string-255" use="required">
+													<xs:annotation>
+														<xs:documentation>Наименование должности</xs:documentation>
+														<xs:documentation>При отсутствии наименования должности указывается наименование вида должностного лица по справочнику СКФЛЮЛ</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="СвНомТел" type="fnst:СвНомТелТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Сведения о контактном телефоне ФЛ</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="СвНедДанДолжнФЛ" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Сведения о недостоверности данных о лице, имеющем право без доверенности действовать от имени юридического лица</xs:documentation>
+												<xs:documentation>Формируется только если в ЕГРЮЛ внесены сведения о недостоверности сведений о данном лице, имеющем право действовать без доверенности от имени юридического лица</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="РешСудНедДанДолжнФЛ" type="fnst:РешСудТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Сведения о решении суда, на основании которого указанные сведения признаны недостоверными</xs:documentation>
+															<xs:documentation>Формируется в случае, если значение реквизита ПризнНедДанУпрОрг=3</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+															<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="ПризнНедДанДолжнФЛ" use="required">
+													<xs:annotation>
+														<xs:documentation>Признак недостоверности данных</xs:documentation>
+														<xs:documentation>, где:
+1 - признак недостоверности, внесенный в ЕГРЮЛ на основании заявления по форме Р34001 самого физического лица (если сведения о недостоверности сведений о лице, имеющем право действовать без доверенности от имени юридического лица, внесены на основании записи с кодом СПВЗ 17022);
+2 - признак недостоверности, внесенный в ЕГРЮЛ по результатам проверки достоверности содержащихся в ЕГРЮЛ сведений о юридическом лице (если сведения о недостоверности сведений о лице, имеющем право действовать без доверенности от имени юридического лица, внесены на основании записи с кодом СПВЗ 17023);
+3 - признак недостоверности, внесенный в ЕГРЮЛ на основании решения суда (если сведения о недостоверности сведений о лице, имеющем право действовать без доверенности от имени юридического лица, внесены на основании записи с кодом СПВЗ 16006)</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="fnst:string-1">
+															<xs:enumeration value="1"/>
+															<xs:enumeration value="2"/>
+															<xs:enumeration value="3"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="ТекстНедДанДолжнФЛ" use="required">
+													<xs:annotation>
+														<xs:documentation>Текст о недостоверности сведений, выводимый в выписке в строке с наименованием «Дополнительные сведения»</xs:documentation>
+														<xs:documentation>															
+Принимает значение: 
+•	«сведения недостоверны (заявление физического лица о недостоверности сведений о нем)» - если сведения о недостоверности внесены по заявлению самого ФЛ (Р34001) (ПризнНедДанДолжнФЛ =1), 
+•	«сведения недостоверны (результаты проверки достоверности содержащихся в ЕГРЮЛ сведений о юридическом лице)» - если сведения о недостоверности внесены по данным, выявленным НО (ПризнНедДанДолжнФЛ =2), 
+•	«сведения недостоверны (решение суда)» - если сведения о недостоверности внесены на основании решения суда (ПризнНедДанДолжнФЛ =3).
+Выводится в выписке в строке с наименованием «Дополнительные сведения»</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="fnst:string-500"/>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="СвДискв" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Сведения о дисквалификации</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+															<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="ДатаНачДискв" type="xs:date" use="required">
+													<xs:annotation>
+														<xs:documentation>Дата начала дисквалификации</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="ДатаОкончДискв" type="xs:date" use="required">
+													<xs:annotation>
+														<xs:documentation>Дата окончания дисквалификации</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="ДатаРеш" use="required">
+													<xs:annotation>
+														<xs:documentation>Дата вынесения  судебным органом постановления о дисквалификации </xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:date"/>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвУчредит" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Сведения об учредителях (участниках) юридического лица</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="УчрЮЛРос" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Сведения об учредителе (участнике) - российском юридическом лице</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ГРНДатаПерв" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном лице</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="НаимИННЮЛ" type="fnst:СвЮЛЕГРЮЛТип">
+														<xs:annotation>
+															<xs:documentation>Сведения о наименовании и (при наличии) ОГРН и ИНН ЮЛ</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвРегСтарые" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Сведения о регистрации учредителя (участника) до 01.07.2002 г</xs:documentation>
+															<xs:documentation>Формируется только при отсутствии у ЮЛ ОГРН и наличии сведений о регистрации до 01.07.2002 г</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+																	<xs:annotation>
+																		<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+																		<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="РегНом" type="fnst:string-255" use="optional">
+																<xs:annotation>
+																	<xs:documentation>Регистрационный номер, присвоенный юридическому лицу до 1 июля 2002 года</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="ДатаРег" use="optional">
+																<xs:annotation>
+																	<xs:documentation>Дата регистрации юридического лица до 1 июля 2002 года</xs:documentation>
+																</xs:annotation>
+																<xs:simpleType>
+																	<xs:restriction base="xs:date"/>
+																</xs:simpleType>
+															</xs:attribute>
+															<xs:attribute name="НаимРО" type="fnst:string-1000" use="optional">
+																<xs:annotation>
+																	<xs:documentation>Наименование органа, зарегистрировавшего юридическое лицо до 1 июля 2002 года</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="СвНедДанУчр" type="fnst:СвНедДанУчрТип" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Сведения о недостоверности данных об учредителе (участнике) </xs:documentation>
+															<xs:documentation>Формируется только если в ЕГРЮЛ внесены сведения о недостоверности сведений о данном учредителе (участнике)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ДоляУстКап" type="fnst:ДоляУстКапЕГРЮЛТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Сведения о доле учредителя (участника)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвОбрем" type="fnst:СвОбремОткрТип" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Сведения об обременении доли участника</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="УчрЮЛИн" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Сведения об учредителе (участнике) - иностранном юридическом лице</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ГРНДатаПерв" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном лице</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="НаимИННЮЛ" type="fnst:СвЮЛЕГРЮЛТип">
+														<xs:annotation>
+															<xs:documentation>Сведения о наименовании и (при наличии) ИНН ЮЛ</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвРегИн" type="fnst:СвРегИнЮЛЕГРЮЛТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Сведения о регистрации в стране происхождения</xs:documentation>
+															<xs:documentation>Формируется при наличии указанных сведений в ЕГРЮЛ в отношении учредителя (участника) - иностранного ЮЛ</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвНедДанУчр" type="fnst:СвНедДанУчрТип" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Сведения о недостоверности данных об учредителе (участнике) </xs:documentation>
+															<xs:documentation>Формируется только если в ЕГРЮЛ внесены сведения о недостоверности сведений о данном учредителе (участнике)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ДоляУстКап" type="fnst:ДоляУстКапЕГРЮЛТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Сведения о доле учредителя (участника)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвОбрем" type="fnst:СвОбремОткрТип" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Сведения об обременении доли участника</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="УчрФЛ" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Сведения об учредителе (участнике) - физическом лице</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ГРНДатаПерв" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном лице</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвФЛ" type="fnst:СвФЛЕГРЮЛТип">
+														<xs:annotation>
+															<xs:documentation>Сведения о ФИО и (при наличии) ИНН ФЛ</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвНедДанУчр" type="fnst:СвНедДанУчрТип" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Сведения о недостоверности данных об учредителе (участнике) </xs:documentation>
+															<xs:documentation>Формируется только если в ЕГРЮЛ внесены сведения о недостоверности сведений о данном учредителе (участнике)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ДоляУстКап" type="fnst:ДоляУстКапЕГРЮЛТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Сведения о доле учредителя (участника)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвОбрем" type="fnst:СвОбремОткрТип" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Сведения об обременении доли участника</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвДовУпрЮЛ" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Сведения о доверительном управляющем - ЮЛ </xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="ГРНДатаПерв" type="fnst:ГРНДатаТип" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном лице</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="НаимИННДовУпр" type="fnst:СвЮЛЕГРЮЛТип">
+																	<xs:annotation>
+																		<xs:documentation>Сведения о наименовании и (при наличии) ОГРН и ИНН ЮЛ</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="СвДовУпрФЛ" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Сведения о доверительном управляющем - ФЛ</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="ГРНДатаПерв" type="fnst:ГРНДатаТип" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном лице</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="СвФЛ" type="fnst:СвФЛЕГРЮЛТип">
+																	<xs:annotation>
+																		<xs:documentation>Сведения о ФИО и (при наличии) ИНН ФЛ</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="ЛицоУпрНасл" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Сведения о лице, осуществляющем управление долей, переходящей в порядке наследования</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="ГРНДатаПерв" type="fnst:ГРНДатаТип" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном лице</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="СвФЛ" type="fnst:СвФЛЕГРЮЛТип">
+																	<xs:annotation>
+																		<xs:documentation>Сведения о ФИО и (при наличии) ИНН ФЛ</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="ДатаОткрНасл" type="xs:date" use="required">
+																<xs:annotation>
+																	<xs:documentation>Дата открытия наследства (дата смерти участника)</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="УчрРФСубМО" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Сведения об учредителе (участнике) - Российской Федерации, субъекте Российской Федерации, муниципальном образовании</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ГРНДатаПерв" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном лице</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ВидНаимУчр">
+														<xs:annotation>
+															<xs:documentation>Сведения о виде учредителя (участника) и (при необходимости) наименовании муниципального образования и региона</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="КодУчрРФСубМО" use="required">
+																<xs:annotation>
+																	<xs:documentation>Код вида учредителя</xs:documentation>
+																	<xs:documentation>, где: 
+																	1 - если учредителем (участником) является  Российская Федерация;
+2 - если учредителем (участником) является субъект Российской организации;
+3 - если учредителем (участником) является муниципальное образование</xs:documentation>
+																</xs:annotation>
+																<xs:simpleType>
+																	<xs:restriction base="fnst:string-1">
+																		<xs:enumeration value="1"/>
+																		<xs:enumeration value="2"/>
+																		<xs:enumeration value="3"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+															<xs:attribute name="НаимМО" type="fnst:string-1000" use="optional">
+																<xs:annotation>
+																	<xs:documentation>Наименование муниципального образования</xs:documentation>
+																	<xs:documentation>Является обязательным, если значение атрибута КодУчрРФСубМО=3</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="КодРегион" type="fnst:SSRFType" use="optional">
+																<xs:annotation>
+																	<xs:documentation>Код субъекта Российской Федерации, который является учредителем (участником) юридического лица или на территории которого находится муниципальное образование, которое является учредителем (участником) юридического лица</xs:documentation>
+																	<xs:documentation>Является обязательным, если значение атрибута КодУчрРФСубМО=2 или 3</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="НаимРегион" type="fnst:string-100" use="optional">
+																<xs:annotation>
+																	<xs:documentation>Наименование субъекта Российской Федерации</xs:documentation>
+																	<xs:documentation>Является обязательным, если значение атрибута КодУчрРФСубМО=2 или 3</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="СвНедДанУчр" type="fnst:СвНедДанУчрТип" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Сведения о недостоверности данных об учредителе (участнике) </xs:documentation>
+															<xs:documentation>Формируется только если в ЕГРЮЛ внесены сведения о недостоверности сведений о данном учредителе (участнике)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ДоляУстКап" type="fnst:ДоляУстКапЕГРЮЛТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Сведения о доле учредителя (участника)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвОргОсущПр" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Сведения об органе государственной власти, органе местного самоуправления или о юридическом лице, осуществляющем права учредителя (участника)</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="ГРНДатаПерв" type="fnst:ГРНДатаТип" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном лице</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="НаимИННЮЛ" type="fnst:СвЮЛЕГРЮЛТип">
+																	<xs:annotation>
+																		<xs:documentation>Сведения о наименовании и (при наличии) ОГРН и ИНН органа государственной власти, органа местного самоуправления или ЮЛ</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="СвФЛОсущПр" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Сведения о физическом лице, осуществляющем права учредителя (участника)</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="ГРНДатаПерв" type="fnst:ГРНДатаТип" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном лице</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="СвФЛ" type="fnst:СвФЛЕГРЮЛТип">
+																	<xs:annotation>
+																		<xs:documentation>Сведения о ФИО и (при наличии) ИНН ФЛ</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="СвОбрем" type="fnst:СвОбремОткрТип" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Сведения об обременении доли участника</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="УчрПИФ" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Сведения о паевом инвестиционном фонде, в состав имущества которого включена доля в уставном капитале </xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ГРНДатаПерв" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном лице</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвНаимПИФ">
+														<xs:annotation>
+															<xs:documentation>Сведения о названии (индивидуальном обозначении) паевого инвестиционного фонда</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+																	<xs:annotation>
+																		<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+																		<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="НаимПИФ" type="fnst:string-1000" use="required">
+																<xs:annotation>
+																	<xs:documentation>Название (индивидуальное обозначение) паевого инвестиционного фонда</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="СвНедДанУчр" type="fnst:СвНедДанУчрТип" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Сведения о недостоверности данных об учредителе (участнике) </xs:documentation>
+															<xs:documentation>Формируется только если в ЕГРЮЛ внесены сведения о недостоверности сведений о данном учредителе (участнике)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвУпрКомпПИФ">
+														<xs:annotation>
+															<xs:documentation>Сведения об управляющей компании паевого инвестиционного фонда</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="ГРНДатаПерв" type="fnst:ГРНДатаТип" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном лице</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="УпрКомпПиф" type="fnst:СвЮЛЕГРЮЛТип">
+																	<xs:annotation>
+																		<xs:documentation>Наименование и (при наличии) ОГРН и ИНН управляющей компании паевого инвестиционного фонда</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="ДоляУстКап" type="fnst:ДоляУстКапЕГРЮЛТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Сведения о доле учредителя (участника)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвОбрем" type="fnst:СвОбремОткрТип" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Сведения об обременении доли участника</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвДоляООО" type="fnst:ДоляУстКапЕГРЮЛТип" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Сведения о доле в уставном капитале общества с ограниченной ответственностью, принадлежащей обществу</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="СвДержРеестрАО" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Сведения о держателе реестра акционеров акционерного общества</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ГРНДатаПерв" type="fnst:ГРНДатаТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном лице</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ДержРеестрАО" type="fnst:СвЮЛЕГРЮЛТип">
+											<xs:annotation>
+												<xs:documentation>Наименование и (при наличии) ОГРН и ИНН держателе реестра акционеров акционерного общества</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвОКВЭД" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Сведения о видах экономической деятельности по Общероссийскому классификатору видов экономической деятельности</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="СвОКВЭДОсн" type="fnst:СвОКВЭДТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Сведения об основном виде деятельности</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="СвОКВЭДДоп" type="fnst:СвОКВЭДТип" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Сведения о дополнительном виде деятельности</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвЛицензия" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Сведения о лицензиях, выданных ЮЛ</xs:documentation>
+									<xs:documentation>Передаются сведения только о действующих лицензиях или лицензиях, действие которых приостановлено. При передаче сведений о ЮЛ, прекратившем деятельность, сведения о лицензиях не передаются</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="НаимЛицВидДеят" type="fnst:string-1000" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Наименование лицензируемого вида деятельности, на который выдана лицензия</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="МестоДейстЛиц" type="fnst:string-1000" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Сведения об адресе места осуществления лицензируемого вида деятельности</xs:documentation>
+												<xs:documentation>Элемент не формируется, если конкретное место осуществления лицензируемого вида деятельности в лицензии не указано или указано в географических координатах.
+При наличии - сведения указываются в отношении каждого адреса места осуществления лицензируемого вида деятельности, внесенного в ЕГРЮЛ
+</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ЛицОргВыдЛиц" type="fnst:string-1000" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Наименование лицензирующего органа, выдавшего или переоформившего лицензию</xs:documentation>
+												<xs:documentation>Формируется в случае наличия указанных сведений в ЕГРЮЛ</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+												<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="СвПриостЛиц" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Сведения о приостановлении действия лицензии</xs:documentation>
+												<xs:documentation>Формируется в случае, если на момент выдачи сведений в ЕГРЮЛ имеются сведения о том, что лицензия приостановлена</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+															<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="ДатаПриостЛиц" use="required">
+													<xs:annotation>
+														<xs:documentation>Дата приостановления действия лицензии</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:date"/>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="ЛицОргПриостЛиц" type="fnst:string-1000" use="required">
+													<xs:annotation>
+														<xs:documentation>Наименование лицензирующего органа, приостановившего действие лицензии</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="НомЛиц" type="fnst:string-100" use="required">
+										<xs:annotation>
+											<xs:documentation>Серия и номер лицензии</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="ДатаЛиц" type="xs:date" use="required">
+										<xs:annotation>
+											<xs:documentation>Дата лицензии</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="ДатаНачЛиц" type="xs:date" use="required">
+										<xs:annotation>
+											<xs:documentation>Дата начала действия лицензии</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="ДатаОкончЛиц" type="xs:date" use="optional">
+										<xs:annotation>
+											<xs:documentation>Дата окончания действия лицензии</xs:documentation>
+											<xs:documentation>
+											Является обязательным, если выданная лицензия имеет такой реквизит </xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвПодразд" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Сведения об обособленных подразделениях юридического лица</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="СвФилиал" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Сведения о филиалах юридического лица</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ГРНДатаПерв" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном филиале</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвНаим" type="fnst:СвНаимПодраздТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Сведения о наименовании филиала</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="АдрМНРФ" type="fnst:АдрРФЕГРЮЛТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Адрес (место расположения) на территории Российской Федерации</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="АдрМНИн" type="fnst:АдрИнЕГРЮЛТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Адрес (место расположения) за пределами территории Российской Федерации</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвУчетНОФилиал" type="fnst:СвУчетНОПодраздТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Сведения об учете в налоговом органе по месту нахождения филиала</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="СвПредстав" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Сведения о представительствах юридического лица</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ГРНДатаПерв" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ сведений о данном представительстве</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвНаим" type="fnst:СвНаимПодраздТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Сведения о наименовании представительства</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="АдрМНРФ" type="fnst:АдрРФЕГРЮЛТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Адрес (место расположения) на территории Российской Федерации</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="АдрМНИн" type="fnst:АдрИнЕГРЮЛТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Адрес (место расположения) за пределами территории Российской Федерации</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="СвУчетНОПредстав" type="fnst:СвУчетНОПодраздТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Сведения об учете в налоговом органе по месту нахождения представительства</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвРеорг" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Сведения об участии в реорганизации</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="СвСтатус">
+											<xs:annotation>
+												<xs:documentation>Сведения о форме реорганизации (статусе) юридического лица</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="КодСтатусЮЛ" type="fnst:string-3" use="required">
+													<xs:annotation>
+														<xs:documentation>Код формы реорганизации (статуса) юридического лица по справочнику СЮЛСТ</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="НаимСтатусЮЛ" type="fnst:string-500" use="required">
+													<xs:annotation>
+														<xs:documentation>Наименование формы реорганизации (статуса) юридического лица по справочнику СЮЛСТ</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей сведения о начале реорганизации</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ГРНДатаИзмСостРеоргЮЛ" type="fnst:ГРНДатаТип" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения записи, которой в ЕГРЮЛ внесены сведения об изменении состава участвующих в реорганизации юридических лиц </xs:documentation>
+												<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="СвРеоргЮЛ" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Сведения о юридических лицах, участвующих  в реорганизации</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+															<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="ОГРН" type="fnst:OGRNCompanyType" use="required">
+													<xs:annotation>
+														<xs:documentation>Основной государственный регистрационный номер юридического лица</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="ИНН" type="fnst:LegalPersonINNType" use="required">
+													<xs:annotation>
+														<xs:documentation>ИНН юридического лица</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="НаимЮЛПолн" type="fnst:string-1000" use="required">
+													<xs:annotation>
+														<xs:documentation>Полное наименование юридического лица</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="СостЮЛпосле" type="fnst:string-50" use="optional">
+													<xs:annotation>
+														<xs:documentation>Состояние юридического лица после завершения реорганизации</xs:documentation>
+														<xs:documentation>Принимает значение: ПРЕКРАТИТ ДЕЯТЕЛЬНОСТЬ ПОСЛЕ РЕОРГАНИЗАЦИИ | ПРОДОЛЖИТ ДЕЯТЕЛЬНОСТЬ ПОСЛЕ РЕОРГАНИЗАЦИИ </xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвПредш" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Сведения о правопредшественнике</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="СвЮЛсложнРеорг" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Сведения о ЮЛ, путем реорганизации которого был создан правопредшественник при реорганизации в форме выделения или разделения с одновременным присоединением или слиянием</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="ОГРН" type="fnst:OGRNCompanyType" use="required">
+													<xs:annotation>
+														<xs:documentation>Основной государственный регистрационный номер юридического лица</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="ИНН" type="fnst:LegalPersonINNType" use="optional">
+													<xs:annotation>
+														<xs:documentation>ИНН юридического лица</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="НаимЮЛПолн" type="fnst:string-1000" use="required">
+													<xs:annotation>
+														<xs:documentation>Полное наименование юридического лица</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+												<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="ОГРН" type="fnst:OGRNCompanyType" use="optional">
+										<xs:annotation>
+											<xs:documentation>Основной государственный регистрационный номер юридического лица</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="ИНН" type="fnst:LegalPersonINNType" use="optional">
+										<xs:annotation>
+											<xs:documentation>ИНН юридического лица</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="НаимЮЛПолн" type="fnst:string-1000" use="required">
+										<xs:annotation>
+											<xs:documentation>Полное наименование юридического лица</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвКФХПредш" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Сведения о крестьянском (фермерском) хозяйстве, на базе имущества которого создано юридическое лицо</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="СвФЛ" type="fnst:СвФЛЕГРЮЛТип">
+											<xs:annotation>
+												<xs:documentation>Сведения о ФИО и (при наличии) ИНН главы КФХ</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="ОГРНИП" type="fnst:OGRNSoleProprietorType" use="required">
+										<xs:annotation>
+											<xs:documentation>ОГРНИП крестьянского (фермерского) хозяйства</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвПреем" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Сведения о правопреемнике</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="СвЮЛсложнРеорг" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Сведения о ЮЛ, которое было создано в форме слияния с участием правопреемника, или к которому присоединился правопреемник при реорганизации в форме выделения или разделения с одновременным присоединением или слиянием</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="ОГРН" type="fnst:OGRNCompanyType" use="required">
+													<xs:annotation>
+														<xs:documentation>Основной государственный регистрационный номер юридического лица</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="ИНН" type="fnst:LegalPersonINNType" use="optional">
+													<xs:annotation>
+														<xs:documentation>ИНН юридического лица</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="НаимЮЛПолн" type="fnst:string-1000" use="required">
+													<xs:annotation>
+														<xs:documentation>Полное наименование юридического лица</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ГРНДата" type="fnst:ГРНДатаТип">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей указанные сведения</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ГРНДатаИспр" type="fnst:ГРНДатаТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи об исправлении технической ошибки в указанных сведениях </xs:documentation>
+												<xs:documentation>Отсутствует, если в указанных сведениях не исправлялись технические ошибки </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="ОГРН" type="fnst:OGRNCompanyType" use="required">
+										<xs:annotation>
+											<xs:documentation>Основной государственный регистрационный номер юридического лица</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="ИНН" type="fnst:LegalPersonINNType" use="optional">
+										<xs:annotation>
+											<xs:documentation>ИНН юридического лица</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="НаимЮЛПолн" type="fnst:string-1000" use="required">
+										<xs:annotation>
+											<xs:documentation>Полное наименование юридического лица</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвКФХПреем" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Сведения о крестьянском (фермерском) хозяйстве, которые  внесены в ЕГРИП в связи с приведением правового статуса крестьянского (фермерского) хозяйства в соответствие с нормами части первой Гражданского кодекса Российской Федерации</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="СвФЛ" type="fnst:СвФЛЕГРЮЛТип">
+											<xs:annotation>
+												<xs:documentation>Сведения о ФИО и (при наличии) ИНН главы КФХ</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="ОГРНИП" type="fnst:OGRNSoleProprietorType" use="required">
+										<xs:annotation>
+											<xs:documentation>ОГРНИП крестьянского (фермерского) хозяйства</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="СвЗапЕГРЮЛ" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Сведения о записях, внесенных в ЕГРЮЛ</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ВидЗап" type="fnst:ВидЗапТип">
+											<xs:annotation>
+												<xs:documentation>Сведения о причине внесения записи в ЕГРЮЛ</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="СвРегОрг" type="fnst:СвРегОргТип">
+											<xs:annotation>
+												<xs:documentation>Сведения о регистрирующем (налоговом) органе, внесшем запись в ЕГРЮЛ</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="СведПредДок" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Сведения о документах, представленных при внесении записи в ЕГРЮЛ</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="НаимДок" type="fnst:string-255">
+														<xs:annotation>
+															<xs:documentation>Наименование документа</xs:documentation>
+															<xs:documentation>При отсутствии наименования документа указывается наименование вида документа по справочнику СВДРЕГ</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="НомДок" type="fnst:string-255" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Номер документа</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ДатаДок" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Дата документа</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:date">
+																<xs:minInclusive value="1900-01-01"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="СвСвид" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Сведения о свидетельстве, подтверждающем факт внесения записи в ЕГРЮЛ</xs:documentation>
+												<xs:documentation>Формируется в отношении выданных свидетельств (включая свидетельства, выданные повторно), а также свидетельств, признанных недействительными по решению суда</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ГРНДатаСвидНед" type="fnst:ГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения в ЕГРЮЛ записи, содержащей сведения о признании свидетельства недействительным по решению суда </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="Серия" type="fnst:string-2" use="optional">
+													<xs:annotation>
+														<xs:documentation>Серия бланка свидетельства</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="Номер" type="fnst:string-10" use="optional">
+													<xs:annotation>
+														<xs:documentation>Номер бланка свидетельства</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="ДатаВыдСвид" use="required">
+													<xs:annotation>
+														<xs:documentation>Дата выдачи свидетельства </xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:date"/>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ГРНДатаИспрПред" type="fnst:ИдГРНДатаТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата записи, в которую внесены исправления</xs:documentation>
+												<xs:documentation>Формируется только в случае, если данной записью были внесены исправления (корректировки) в сведения другой записи</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ГРНДатаНедПред" type="fnst:ИдГРНДатаТип" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ГРН и дата записи, которая признана недействительной</xs:documentation>
+												<xs:documentation>Формируется только в случае, если данной записью  была признана недействительной (ошибочной)  другая запись</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="СвСтатусЗап" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Сведения о статусе записи</xs:documentation>
+												<xs:documentation>Формируется только в случае, если в данную запись были внесены исправления (корректировки) другой записью или данная запись признана недействительной (ошибочной) другой записью</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ГРНДатаНед" type="fnst:ИдГРНДатаТип" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата внесения записи, которой запись признана недействительной</xs:documentation>
+															<xs:documentation>Отсутствует, если данная запись не была признана недействительной (ошибочной) другой записью </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ГРНДатаИспр" type="fnst:ИдГРНДатаТип" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>ГРН и дата записи, которой внесены исправления в связи с технической ошибкой</xs:documentation>
+															<xs:documentation>Отсутствует, если в сведениях, внесенных в ЕГРЮЛ по данной записи, не исправлялись технические ошибки </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="ИдЗап" type="fnst:number-19" use="required">
+										<xs:annotation>
+											<xs:documentation>Системный идентификатор записи</xs:documentation>
+											<xs:documentation>При наличии государственного регистрационного номера записи может совпадать с этим номером</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="ГРН" type="fnst:OGRNCompanyType" use="optional">
+										<xs:annotation>
+											<xs:documentation>Государственный регистрационный номер записи</xs:documentation>
+											<xs:documentation>Может отсутствовать, если запись в ЕГРЮЛ внесена без присвоения государственного регистрационного номера</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="ДатаЗап" use="required">
+										<xs:annotation>
+											<xs:documentation>Дата внесения записи в ЕГРЮЛ</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:date"/>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="ДатаВып" type="xs:date" use="required">
+							<xs:annotation>
+								<xs:documentation>Дата формирования сведений из ЕГРЮЛ в отношении юридического лица</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ОГРН" type="fnst:OGRNCompanyType" use="required">
+							<xs:annotation>
+								<xs:documentation>Основной государственный регистрационный номер юридического лица</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ДатаОГРН" use="required">
+							<xs:annotation>
+								<xs:documentation>Дата присвоения ОГРН</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:date"/>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="ИНН" type="fnst:LegalPersonINNType" use="optional">
+							<xs:annotation>
+								<xs:documentation>ИНН юридического лица</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="КПП" type="fnst:KPPType" use="optional">
+							<xs:annotation>
+								<xs:documentation>КПП юридического лица</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="СпрОПФ" use="optional">
+							<xs:annotation>
+								<xs:documentation>Наименование классификатора, по которому введены сведения об организационно-правовой форме: ОКОПФ, КОПФ</xs:documentation>
+								<xs:documentation>, где:
+- КОПФ указывается в случае, если сведения об ОПФ были внесены по классификатору КОПФ. В этом случае в реквизите «КодОПФ» указывается 2-х значный код по классификатору КОПФ.
+- ОКОПФ указывается в случае, если сведения об ОПФ были внесены по классификатору ОКОПФ ОК 028 – 99, ОК 028-2012, ОК 028-2012 (изм.2/2014).
+При передаче сведений об ОПФ по классификатору ОКОПФ ОК 028 – 99 в реквизите «КодОПФ» указывается 2-х значный код по данному классификатору.
+При передаче сведений об ОПФ классификаторам ОК 028-2012, ОК 028-2012 (изм.2/2014) в реквизите «КодОПФ» указывается 5-ти значный код по данным классификаторам.
+Отсутствует, если сведения об организационно-правовой форме внесены в ЕГРЮЛ без учета классификаторов</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="fnst:string-10">
+									<xs:enumeration value="ОКОПФ"/>
+									<xs:enumeration value="КОПФ"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="КодОПФ" type="fnst:string-10" use="optional">
+							<xs:annotation>
+								<xs:documentation>Код по выбранному классификатору</xs:documentation>
+								<xs:documentation>Является обязательным при наличии реквизита СпрОПФ</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ПолнНаимОПФ" type="fnst:string-255" use="optional">
+							<xs:annotation>
+								<xs:documentation>Полное наименование организационно-правовой формы</xs:documentation>
+								<xs:documentation>Передается в случае, если сведения об ОПФ были внесены без учета классификатора</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:sequence>
+					<xs:element name="КодОбр">
+						<xs:annotation>
+							<xs:documentation>Код обработки</xs:documentation>
+							<xs:documentation>Перечень возможных значений кода обработки приведен в Руководстве пользователя сервиса</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="fnst:string-2"/>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="AttachmentsBlock" type="fnst:_AttachmentsBlockType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Блок сведений о вложении</xs:documentation>
+							<xs:documentation>Обязателен при КодОбр=54</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:choice>
+			<xs:attribute name="ИдДок" type="fnst:string-36" use="required">
+				<xs:annotation>
+					<xs:documentation>Идентификатор запроса</xs:documentation>
+					<xs:documentation>Указывается GUID запроса</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn://mincomsvyaz/esia/reg_service/register/1.4.1" xmlns:ns2="urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1" targetNamespace="urn://mincomsvyaz/esia/reg_service/register/1.4.1" elementFormDefault="qualified">
+	<xs:import namespace="urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1" schemaLocation="./commons/rg_services_type.xsd"/>
+	<xs:annotation>
+		<xs:documentation>
+			Вид сведений "Регистрация подтверждённой учётной записи в ЕСИА с отправкой пароля для первого входа на контактные данные (аналог Register для SID0003923)"
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ESIARegisterRequest" type="tns:ESIARegisterRequestType">
+		<xs:annotation>
+			<xs:documentation>Описание запросной части</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ESIARegisterResponse" type="tns:ESIARegisterResponseType">
+		<xs:annotation>
+			<xs:documentation>Описание ответной части</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ESIARegisterRequestType">
+		<xs:annotation>
+			<xs:documentation>Описание элементов запроса</xs:documentation>
+		</xs:annotation>
+
+		<xs:sequence>
+            <xs:element name="RoutingCode" type="ns2:EnvType" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Код маршрутизации на cреду ЕСИА</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+			<xs:element name="SnilsOperator" type="ns2:snilsType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>СНИЛС оператора центра обслуживания</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ra" type="ns2:raType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Идентификатор центра обслуживания</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="snils" type="ns2:snilsType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>СНИЛС пользователя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastName" type="ns2:lastNameType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Фамилия пользователя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="firstName" type="ns2:firstNameType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Имя пользователя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="middleName" type="ns2:middleNameType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Отчество пользователя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="gender" type="ns2:genderType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Пол пользователя ("M" - мужской, "F" - женский)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="birthDate" type="ns2:dateType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Дата рождения пользователя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="doc" type="ns2:document2Type" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Документ, удостоверяющий личность пользователя </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="email" type="ns2:emailType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Адрес электронной почты пользователя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mobile" type="ns2:mobileType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Номер мобильного телефона пользователя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="citizenship" type="ns2:citizenshipType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Гражданство пользователя по классификатору ОКСМ (три символа - Альфа-3)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mode" type="ns2:modeType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Способ доставки пароля для первого входа в систему (email - на адрес электронной почты, если задан; mobile - отправка на номер мобильного телефона - всегда)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="address" type="ns2:addressType" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Перечень адресов пользователя (регистрации, фактического проживания)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="birthPlace" type="ns2:birthplaceType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Место рождения: из ДУЛ или фактическое (страна, населенный пункт), если не указано в ДУЛ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ESIARegisterResponseType">
+		<xs:annotation>
+			<xs:documentation>Описание элементов ответа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="status" type="ns2:statusType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Статус выполнения операции</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="oid" type="ns2:oidType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Идентификатор учетной записи</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="requestId" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Идентификатор операции на регистрацию учетной записи в ЕСИА</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="warning" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Предупреждение, в случае совпадения указанных при регистрации контактов с уже имеющимися в ЕСИА</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="errorStatusInfo" type="ns2:errorstatusinfoType" minOccurs="0" maxOccurs="25">
+				<xs:annotation>
+					<xs:documentation>Детальная информация об ошибке</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

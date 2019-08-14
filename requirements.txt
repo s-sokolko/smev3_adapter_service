@@ -1,0 +1,4 @@
+zeep==3.2.0
+sanic==0.8.3
+sanic-token-auth==0.1.1
+motor==2.0.0

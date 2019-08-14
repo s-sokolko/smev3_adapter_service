@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns:ns2="urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1" elementFormDefault="qualified" targetNamespace="urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:documentation>
+			Описания типов данных для Сервиса регистрации и УПРИД под СМЭВ 3.x (аналоги SID0003923 и SID0004769)
+		</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="raType">
+		<xs:restriction base="xs:int" />
+	</xs:simpleType>
+	<xs:simpleType name="lastNameType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="firstNameType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="middleNameType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="genderType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="M" />
+			<xs:enumeration value="F" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="document1Type">
+		<xs:sequence>
+			<xs:element name="type" type="ns2:documenttypeType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Тип документа, удостоверяющего личность</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="series" type="ns2:documentseriesType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Серия документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="number" type="ns2:documentnumberType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Номер документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="document2Type">
+		<xs:sequence>
+			<xs:element name="type" type="ns2:documenttypeType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Тип документа, удостоверяющего личность</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="latinLastName" type="ns2:documenlatinlastnameType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Фамилия (латиницей)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="latinFirstName" type="ns2:documenlatinfirstnameType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Имя (латиницей)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="series" type="ns2:documentseriesType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Серия документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="number" type="ns2:documentnumberType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Номер документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="issueId" type="ns2:documentissueidType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Идентификатор организации, выдавшей документ (для паспорта РФ — код подразделения в формате XXXXXX; для документа иностранного гражданина не заполняется)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="issueDate" type="ns2:dateType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Дата выдачи документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="expiryDate" type="ns2:dateType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Дата окончания срока действия документа (для паспорта РФ не указывается, для заграничного паспорта РФ и документа иностранного гражданина - при наличии даты)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="issuedBy" type="ns2:documentissuedbyType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Кем выдан документ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="document3Type">
+		<xs:sequence>
+			<xs:element name="type" type="ns2:documenttypeType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Тип документа, удостоверяющего личность (паспорт гражданина РФ - RF_PASSPORT, документ иностранного гражданина - FID_DOC)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="series" type="ns2:documentseriesType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Серия документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="number" type="ns2:documentnumberType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Номер документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="issueId" type="ns2:documentissueidType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Идентификатор организации, выдавшей документ (для паспорта РФ — код подразделения в формате XXXXXX; для документа иностранного гражданина не заполняется)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="issueDate" type="ns2:dateType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Дата выдачи документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="expiryDate" type="ns2:dateType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Дата окончания срока действия документа (для паспорта РФ не указывается, для заграничного паспорта РФ и документа иностранного гражданина - при наличии даты)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="issuedBy" type="ns2:documentissuedbyType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Кем выдан документ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="documenttypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RF_PASSPORT" />
+			<xs:enumeration value="FID_DOC" />
+			<xs:enumeration value="FRGN_PASS" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="documentseriesType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Za-z0-9]{1,32}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="documentnumberType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Za-z0-9]{1,32}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="documenlatinlastnameType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="documenlatinfirstnameType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="documentissueidType">
+		<xs:restriction base="xs:string">
+			<xs:length value="6" />
+			<xs:pattern value="\d{6}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="documentissuedbyType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="2000" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="emailType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="2000" />
+			<xs:pattern value="[0-9a-zA-Z_.\-]{2,50}[@]{1}[0-9a-zA-Z_./-]{2,50}[.]{1}[a-zA-Z]{2,5}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="mobileType">
+		<xs:restriction base="xs:string">
+			<xs:length value="14" />
+			<xs:pattern value="\+7\(\d{3}\)\d{7}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="snilsType">
+		<xs:restriction base="xs:string">
+			<xs:length value="14" />
+			<xs:pattern value="\d{3}-\d{3}-\d{3} \d{2}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="oidType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="stuType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="unverified" />
+			<xs:enumeration value="verified" />
+			<xs:enumeration value="trusted" />
+			<xs:enumeration value="readytoconfirm" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="biomstuType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Y" />
+			<xs:enumeration value="N" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="citizenshipType">
+		<xs:restriction base="xs:string">
+			<xs:length value="3" />
+			<xs:pattern value="[A-Z]{3}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="modeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="email" />
+			<xs:enumeration value="mobile" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="rtrncodeType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:complexType name="matchesType">
+		<xs:sequence>
+			<xs:element name="match" type="ns2:matchType" minOccurs="1" maxOccurs="4">
+				<xs:annotation>
+					<xs:documentation>Наименование параметра (атрибута), по которому была найдена учетная запись</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="matchType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="snils" />
+			<xs:enumeration value="mobile" />
+			<xs:enumeration value="email" />
+			<xs:enumeration value="idoc" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="dateType">
+		<xs:restriction base="xs:string">
+			<xs:length value="10" />
+			<xs:pattern value="[0-3][0-9]\.[0-1][0-9]\.[0-9]{4}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="cfmtypType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="POS" />
+			<xs:enumeration value="RA" />
+			<xs:enumeration value="SYS" />
+			<xs:enumeration value="DSG" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="birthplaceType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="2000" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="statusType">
+		<xs:annotation>
+			<xs:documentation>Тип StatusType - статусы выполнения операций для Сервиса регистрации:
+				VALIDATING – идет проверка данных учетной записи в БГИР;
+				VALIDATION_FAILED – ошибка при проверке данных учетной записи в БГИР, детализация ошибки содержится в параметре errorStatusInfo;
+				CONFIRMATION_FAILED – ошибка при создании подтвержденной учетной записи в ЕСИА, детализация ошибки содержится в параметре errorStatusInfo;
+				SUCCEEDED – операция успешно выполнена;
+				FAULT - ошибка при выполнении запроса.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="VALIDATING" />
+			<xs:enumeration value="VALIDATION_FAILED" />
+			<xs:enumeration value="CONFIRMATION_FAILED" />
+			<xs:enumeration value="SUCCEEDED" />
+			<xs:enumeration value="FAULT" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="statusType2">
+		<xs:annotation>
+			<xs:documentation>Тип StatusType2 - статусы выполнения операций для УПРИД:
+				VALID – данные корректны;
+				PROCESSING – в процессе обработки;
+				INVALID – данные некорректны;
+				INVALID_REQUEST_ID – неверный код запроса;
+				FAILED - ответ от ведомства не поступил. Возможно, проблемы на стороне ведомства. Попробуйте повторить операцию позже;
+				FAULT - ошибка при выполнении запроса.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="VALID" />
+			<xs:enumeration value="PROCESSING" />
+			<xs:enumeration value="INVALID" />
+			<xs:enumeration value="INVALID_REQUEST_ID" />
+			<xs:enumeration value="FAILED" />
+			<xs:enumeration value="FAULT" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="addressreqequalshomType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="equals" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="personinnType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{12}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="brthcertType">
+		<xs:sequence>
+            <xs:element name="type" type="ns2:birthcertCertType" minOccurs="1" maxOccurs="1" />
+			<xs:element name="series" type="ns2:seriescertType" minOccurs="0" maxOccurs="1" />
+			<xs:element name="number" type="ns2:numbercertType" minOccurs="1" maxOccurs="1" />
+			<xs:element name="issuedBy" type="ns2:issuedbyType" minOccurs="1" maxOccurs="1" />
+			<xs:element name="issuedDate" type="ns2:dateType" minOccurs="1" maxOccurs="1" />
+			<xs:element name="parentCount" type="ns2:parentcountType" minOccurs="1" maxOccurs="1" />
+			<xs:element name="actNo" type="ns2:actnoType" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="medicalinsurancepolicyType">
+		<xs:sequence>
+			<xs:element name="number" type="ns2:numberpolicyType" minOccurs="1" maxOccurs="1" />
+			<xs:element name="expiryDate" type="ns2:dateType" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+    <xs:simpleType name="birthcertCertType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="RF_BRTH_CERT">
+                <xs:annotation>
+                    <xs:documentation>Свидетельство о рождении РФ</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FID_BRTH_CERT">
+                <xs:annotation>
+                    <xs:documentation>Свидетельство о рождении иностранного государства</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="OLD_BRTH_CERT">
+                <xs:annotation>
+                    <xs:documentation>Свидетельство о рождении СССР</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+	<xs:simpleType name="seriescertType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="numbercertType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{6,7}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="parentcountType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="0" />
+			<xs:enumeration value="1" />
+			<xs:enumeration value="2" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="actnoType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="numberpolicyType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="issuedbyType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="2000" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="serialnumberType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="issuerorgnameType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="ownertypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PSO" />
+			<xs:enumeration value="ORG" />
+			<xs:enumeration value="IB" />
+			<xs:enumeration value="SYS" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ogrnType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{13}|\d{15}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="orginnType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{10}|\d{12}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="addressType">
+		<xs:sequence>
+			<xs:element name="type" type="ns2:addressesType" minOccurs="1" maxOccurs="1" />
+			<xs:element name="region" type="ns2:regionType" minOccurs="0" maxOccurs="1" />
+			<xs:element name="fiasCode" type="ns2:fiascodeType" minOccurs="0" maxOccurs="1" />
+			<xs:element name="addressStr" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="countryId" type="ns2:countryidType" minOccurs="0" maxOccurs="1" />
+			<xs:element name="zipCode" type="ns2:zipcodeType" minOccurs="1" maxOccurs="1" />
+			<xs:element name="street" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="house" type="ns2:houseType" minOccurs="0" maxOccurs="1" />
+			<xs:element name="flat" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="frame" type="ns2:frameType" minOccurs="0" maxOccurs="1" />
+			<xs:element name="building" type="ns2:buildingType" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="addressesType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PLV" />
+			<xs:enumeration value="PRG" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="regionType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{2}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="fiascodeType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="countryidType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{3}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="zipcodeType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="houseType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[А-ЯЁа-яёA-Za-z0-9].*" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="frameType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[А-ЯЁа-яёA-Za-z0-9].*" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="buildingType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[А-ЯЁа-яёA-Za-z0-9].*" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="unitedpolicynumberType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{16}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="oldpolicynumberType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20" />
+			<xs:pattern value="([\dа-яёa-zА-ЯЁA-Z\-\.]+ № )?[\dа-яёa-zА-ЯЁA-Z\-\.]+" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="temporarypolicynumberType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{9}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="errorstatusinfoType">
+		<xs:sequence>
+			<xs:element name="Code" type="ns2:errorcodeType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Код ошибки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Message" type="ns2:errormessageType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Описание ошибки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="errorcodeType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="32" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="errormessageType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="512" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EnvType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DEV"/>
+			<xs:enumeration value="UAT"/>
+			<xs:enumeration value="TESIA"/>
+			<xs:enumeration value="TCOD"/>
+			<xs:enumeration value="PROD"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
+

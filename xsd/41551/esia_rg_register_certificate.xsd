@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn://mincomsvyaz/esia/reg_service/register_certificate/1.4.1" xmlns:ns2="urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1" targetNamespace="urn://mincomsvyaz/esia/reg_service/register_certificate/1.4.1" elementFormDefault="qualified">
+	<xs:import namespace="urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1" schemaLocation="./commons/rg_services_type.xsd"/>
+	<xs:annotation>
+		<xs:documentation>
+			Вид сведений "Регистрация квалифицированного сертификата ключа проверки электронной подписи в ЕСИА (аналог RegisterCertificate для SID0003923)"
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ESIARegisterCertificateRequest" type="tns:ESIARegisterCertificateRequestType">
+		<xs:annotation>
+			<xs:documentation>Описание запросной части</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ESIARegisterCertificateResponse" type="tns:ESIARegisterCertificateResponseType">
+		<xs:annotation>
+			<xs:documentation>Описание ответной части</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ESIARegisterCertificateRequestType">
+		<xs:annotation>
+			<xs:documentation>Описание элементов запроса</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+            <xs:element name="RoutingCode" type="ns2:EnvType" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Код маршрутизации на cреду ЕСИА</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+			<xs:element name="serialNumber" type="ns2:serialnumberType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Серийный номер сертификата ключа КЭП</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="issuerOrgName" type="ns2:issuerorgnameType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Имя организации — издателя сертификата ключа КЭП</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="startDate" type="ns2:dateType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Дата начала действия сертификата ключа КЭП</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="expiryDate" type="ns2:dateType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Дата окончания действия сертификата ключа КЭП</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ownerType" type="ns2:ownertypeType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						Тип владельца сертификата:
+						PSO — сертификат физического лица;
+		                ORG — сертификат должностного лица организации;
+		                IB  — индивидуальный предприниматель (ИП);
+		                SYS — сертификат информационной системы организации
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="snils" type="ns2:snilsType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>СНИЛС пользователя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="personINN" type="ns2:personinnType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>ИНН пользователя (физического лица)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastName" type="ns2:lastNameType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Фамилия пользователя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="firstName" type="ns2:firstNameType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Имя пользователя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="middleName" type="ns2:middleNameType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Отчество пользователя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="gender" type="ns2:genderType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Пол пользователя ("M" - мужской, "F" - женский)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="birthDate" type="ns2:dateType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Дата рождения пользователя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="birthPlace" type="ns2:birthplaceType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Место рождения: из ДУЛ или фактическое (страна, населенный пункт), если не указано в ДУЛ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="doc" type="ns2:document3Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Документ, удостоверяющий личность пользователя </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="citizenship" type="ns2:citizenshipType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Гражданство пользователя по классификатору ОКСМ (три символа - Альфа-3)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ogrn" type="ns2:ogrnType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>ОГРН организации / ОГРНИП</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="orgINN" type="ns2:orginnType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>ИНН организации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ESIARegisterCertificateResponseType">
+		<xs:annotation>
+			<xs:documentation>Описание элементов ответа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="status" type="ns2:statusType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Статус выполнения операции</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="errorStatusInfo" type="ns2:errorstatusinfoType" minOccurs="0" maxOccurs="20">
+				<xs:annotation>
+					<xs:documentation>Детальная информация об ошибке</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
