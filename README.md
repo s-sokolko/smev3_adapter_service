@@ -11,30 +11,37 @@ smev3_adapter_service использует Mongo и Sanic
 
 Примеры отправки запроса для получения выписок ЕГРЮЛ и ЕГРИП
 
-`POST http://localhost:9003/schedule_query/FNSVipUL/
+```javascript
+POST http://localhost:9003/schedule_query/FNSVipUL/
 {
 "ЗапросЮЛ": {
 "ОГРН": "1027700070518"
 },
 "ИдДок": "3"
-}`
+}
+```
 
-`http://localhost:9003/schedule_query/FNSVipIP/
+```javascript
+http://localhost:9003/schedule_query/FNSVipIP/
 {
 "ЗапросИП": {
 "ОГРНИП": "315723200006533"
 },
 "ИдДок": "4"
-}`
+}
+```
 
 Для получения ответов используется URL /get_document/<тип_запроса>/<идентификатор_запроса>
 
 Примеры получения ответа для получения выписок ЕГРЮЛ и ЕГРИП:
 
+```javascript
+http://localhost:9003/get_document/FNSVipUL/1027700070518
+```
 
-`http://localhost:9003/get_document/FNSVipUL/1027700070518`
-
-`http://localhost:9003/get_document/FNSVipIP/315723200006533`
+```javascript
+http://localhost:9003/get_document/FNSVipIP/315723200006533
+```
 
 Допустимые типы запросов и идентификаторы для каждого типа запросов определяются настройками
 
